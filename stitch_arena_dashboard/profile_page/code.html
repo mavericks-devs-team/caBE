@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CaBE Arena - Profile</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2547f4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101323",
+                        "card-dark": "#222949",
+                        "text-secondary": "#909acb",
+                        "accent-green": "#0bda65",
+                        "rank-platinum": "#e5e4e2", 
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #101323;
+        }
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101323; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222949; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #313a68; 
+        }
+        .glass-panel {
+            background: rgba(34, 41, 73, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background-dark text-white min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top Navbar -->
+<header class="sticky top-0 z-50 w-full border-b border-[#222949] bg-[#101323]/95 backdrop-blur">
+<div class="flex items-center justify-between px-6 py-3 lg:px-10 max-w-[1440px] mx-auto w-full">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-tight">CaBE Arena</h2>
+</div>
+<div class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<div class="flex items-center gap-8">
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium" href="#">Arena</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium" href="#">Leaderboard</a>
+<a class="text-text-secondary hover:text-white transition-colors text-sm font-medium" href="#">Jobs</a>
+<a class="text-white text-sm font-medium border-b-2 border-primary pb-0.5" href="#">Profile</a>
+</div>
+<div class="h-6 w-px bg-[#222949]"></div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-text-secondary hover:text-white">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 size-2 bg-primary rounded-full"></span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 border-2 border-[#222949]" data-alt="User avatar placeholder showing a digital character" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCyCim6nK1-tisndT41CX-eMDqPOsVSmIOCM-CiDnXPLXorO1kfsFwPCZ5Fc2CD41bDi_JBt2YCOcPvloTTLCvSpOZjCCaSv5a0JugGjvLHEUJ_VLfZAbURFuIzUwvNJnNa159-ZEcPJ0wtX4PoL5qii4AggxDhoFV-Gu0J26YxHdcRlbhbfVICZ8Pm9WJKHQz_x_HidKjJrZQpZMO7_eainBQPVTKdDh2f4-MUnVCRFsCacuMfe-RO8oJtkLuG2Gx9qz-t4RdjsdCt");'></div>
+</div>
+</div>
+<!-- Mobile Menu Icon -->
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main class="flex-grow w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<!-- Profile Header Section -->
+<section class="mb-8">
+<div class="flex flex-col md:flex-row gap-6 items-start md:items-end justify-between glass-panel p-6 rounded-2xl relative overflow-hidden group">
+<!-- Decorative background glow -->
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none"></div>
+<div class="flex flex-col sm:flex-row gap-6 w-full relative z-10">
+<div class="relative">
+<div class="bg-center bg-no-repeat bg-cover rounded-xl size-32 border-4 border-[#222949] shadow-xl" data-alt="Profile picture of Alex Chen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC17FugOV4YG6eCge6qFbFPzSu8vypdZAOLwuywDqs9UsJ87fPH0X40cDZ-HKKV-mqIJVeF9FjbejAzYaqVeRTbolojbaCTU9lKQ93ettHi_NO06NTi3j5r8GBboKg5N7mmpB8hnuHIp4Nl6zdGbiv2GlV0-ZRtVgaPGZqfpbbI-pltPckFsy8QilRU2m5O4iyM6jst_UtDmVW-OqbgfWucRJTCup6t8cqaLK4y-NhH-8NObWgTtPjRMt8DaArxEIl5_sOqNileQ8BQ");'></div>
+<div class="absolute -bottom-3 -right-3 bg-[#101323] p-1.5 rounded-full">
+<div class="bg-gradient-to-br from-yellow-400 to-orange-600 size-8 rounded-full flex items-center justify-center text-[#101323] font-bold text-xs shadow-lg" title="Level 42">
+                                42
+                            </div>
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<div class="flex flex-wrap items-center gap-3 mb-1">
+<h1 class="text-3xl font-bold text-white tracking-tight">Alex Chen</h1>
+<span class="px-2 py-0.5 rounded text-xs font-bold bg-primary/20 text-blue-300 border border-primary/30">PRO</span>
+<span class="flex items-center text-xs text-text-secondary gap-1">
+<span class="material-symbols-outlined text-[16px]">location_on</span> San Francisco, CA
+                            </span>
+</div>
+<p class="text-text-secondary text-base mb-4 max-w-2xl">Senior Full Stack Developer specializing in scalable React architectures and Node.js microservices.</p>
+<div class="flex flex-wrap gap-2">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#222949] text-xs font-medium text-white border border-white/5">
+<span class="material-symbols-outlined text-[14px] text-accent-green">code</span> React
+                            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#222949] text-xs font-medium text-white border border-white/5">
+<span class="material-symbols-outlined text-[14px] text-accent-green">data_object</span> TypeScript
+                            </span>
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#222949] text-xs font-medium text-white border border-white/5">
+<span class="material-symbols-outlined text-[14px] text-accent-green">cloud</span> AWS
+                            </span>
+</div>
+</div>
+</div>
+<div class="flex gap-3 w-full md:w-auto relative z-10">
+<button class="flex-1 md:flex-none h-10 px-4 rounded-lg bg-[#222949] hover:bg-[#2d365e] text-white text-sm font-bold transition-colors flex items-center justify-center gap-2 border border-white/5">
+<span class="material-symbols-outlined text-[18px]">share</span> Share
+                    </button>
+<button class="flex-1 md:flex-none h-10 px-6 rounded-lg bg-primary hover:bg-blue-600 text-white text-sm font-bold shadow-lg shadow-primary/25 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-[18px]">edit</span> Edit Profile
+                    </button>
+</div>
+</div>
+</section>
+<!-- Main Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Identity & Status (4/12) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Rank Card -->
+<div class="bg-card-dark rounded-2xl p-6 border border-white/5 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]">military_tech</span>
+</div>
+<div class="relative z-10">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-text-secondary text-sm font-bold uppercase tracking-wider">Current Rank</h3>
+<span class="text-accent-green text-xs font-bold bg-accent-green/10 px-2 py-1 rounded">+450 XP this week</span>
+</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="size-16 rounded-xl bg-gradient-to-br from-slate-300 to-slate-500 flex items-center justify-center shadow-lg shadow-slate-500/20">
+<span class="material-symbols-outlined text-white text-[32px]">workspace_premium</span>
+</div>
+<div>
+<p class="text-3xl font-bold text-white tracking-tight">Platinum III</p>
+<p class="text-text-secondary text-sm">Top 5% Global</p>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="text-xs text-text-secondary">Progress to Diamond</span>
+<span class="text-xs font-bold text-white">85%</span>
+</div>
+<div class="h-2 w-full bg-[#101323] rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full relative" style="width: 85%;">
+<div class="absolute inset-0 bg-white/20 animate-pulse"></div>
+</div>
+</div>
+<p class="text-text-secondary text-xs mt-1 text-right">450 XP remaining</p>
+</div>
+</div>
+</div>
+<!-- Quick Stats Grid -->
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-card-dark p-4 rounded-xl border border-white/5 flex flex-col gap-2">
+<div class="flex items-center gap-2 text-text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px]">bolt</span>
+<span class="text-xs font-bold uppercase">Total XP</span>
+</div>
+<p class="text-2xl font-bold text-white">12,500</p>
+<span class="text-xs text-accent-green font-medium">+12% vs last month</span>
+</div>
+<div class="bg-card-dark p-4 rounded-xl border border-white/5 flex flex-col gap-2">
+<div class="flex items-center gap-2 text-text-secondary mb-1">
+<span class="material-symbols-outlined text-[20px] text-orange-500">local_fire_department</span>
+<span class="text-xs font-bold uppercase">Streak</span>
+</div>
+<p class="text-2xl font-bold text-white">14 Days</p>
+<span class="text-xs text-text-secondary font-medium">Best: 42 Days</span>
+</div>
+</div>
+<!-- Skill Chart -->
+<div class="bg-card-dark rounded-2xl p-6 border border-white/5">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-white font-bold text-lg">Skill Proficiency</h3>
+<button class="text-text-secondary hover:text-white transition-colors">
+<span class="material-symbols-outlined">more_horiz</span>
+</button>
+</div>
+<div class="relative h-48 w-full">
+<!-- Simplified SVG Chart for "Radar" Look -->
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 100 80">
+<!-- Grid Lines -->
+<path d="M10 70 L90 70" stroke="#313a68" stroke-dasharray="4 4" stroke-width="1"></path>
+<path d="M10 40 L90 40" stroke="#313a68" stroke-dasharray="4 4" stroke-width="1"></path>
+<path d="M10 10 L90 10" stroke="#313a68" stroke-dasharray="4 4" stroke-width="1"></path>
+<!-- Data Path -->
+<path d="M10 70 L26 30 L42 50 L58 20 L74 40 L90 25" fill="none" stroke="#2547f4" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Gradient Fill under line -->
+<path d="M10 70 L26 30 L42 50 L58 20 L74 40 L90 25 V 80 H 10 Z" fill="url(#chartGradient)" opacity="0.2"></path>
+<!-- Data Points -->
+<circle cx="26" cy="30" fill="#101323" r="3" stroke="#2547f4" stroke-width="2"></circle>
+<circle cx="58" cy="20" fill="#101323" r="3" stroke="#2547f4" stroke-width="2"></circle>
+<circle cx="90" cy="25" fill="#101323" r="3" stroke="#2547f4" stroke-width="2"></circle>
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#2547f4"></stop>
+<stop offset="100%" stop-color="#2547f4" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="flex justify-between mt-4 px-2">
+<div class="text-center">
+<div class="text-[10px] text-text-secondary uppercase tracking-wider font-bold mb-1">Frontend</div>
+<div class="text-sm font-bold text-white">Lvl 9</div>
+</div>
+<div class="text-center">
+<div class="text-[10px] text-text-secondary uppercase tracking-wider font-bold mb-1">Backend</div>
+<div class="text-sm font-bold text-white">Lvl 7</div>
+</div>
+<div class="text-center">
+<div class="text-[10px] text-text-secondary uppercase tracking-wider font-bold mb-1">DevOps</div>
+<div class="text-sm font-bold text-white">Lvl 8</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: Activity & Achievements (8/12) -->
+<div class="lg:col-span-8 flex flex-col gap-6">
+<!-- Achievements / Badges Shelf -->
+<div class="bg-card-dark rounded-2xl p-6 border border-white/5">
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-white font-bold text-lg">Recent Achievements</h3>
+<a class="text-primary text-sm font-bold hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<!-- Badge 1 -->
+<div class="group bg-[#1a1f36] hover:bg-[#252b46] transition-colors p-4 rounded-xl border border-white/5 flex flex-col items-center text-center gap-3 cursor-pointer">
+<div class="size-12 rounded-full bg-yellow-500/10 flex items-center justify-center text-yellow-500 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">bug_report</span>
+</div>
+<div>
+<h4 class="text-white text-sm font-bold">Bug Hunter</h4>
+<p class="text-text-secondary text-xs mt-1">Fixed 50 critical bugs</p>
+</div>
+</div>
+<!-- Badge 2 -->
+<div class="group bg-[#1a1f36] hover:bg-[#252b46] transition-colors p-4 rounded-xl border border-white/5 flex flex-col items-center text-center gap-3 cursor-pointer">
+<div class="size-12 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-500 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">rocket_launch</span>
+</div>
+<div>
+<h4 class="text-white text-sm font-bold">Speed Demon</h4>
+<p class="text-text-secondary text-xs mt-1">Top 1% submission time</p>
+</div>
+</div>
+<!-- Badge 3 -->
+<div class="group bg-[#1a1f36] hover:bg-[#252b46] transition-colors p-4 rounded-xl border border-white/5 flex flex-col items-center text-center gap-3 cursor-pointer">
+<div class="size-12 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-500 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">diversity_3</span>
+</div>
+<div>
+<h4 class="text-white text-sm font-bold">Team Player</h4>
+<p class="text-text-secondary text-xs mt-1">100 Code Reviews</p>
+</div>
+</div>
+<!-- Badge 4 -->
+<div class="group bg-[#1a1f36] hover:bg-[#252b46] transition-colors p-4 rounded-xl border border-white/5 flex flex-col items-center text-center gap-3 cursor-pointer">
+<div class="size-12 rounded-full bg-accent-green/10 flex items-center justify-center text-accent-green group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[28px]">calendar_month</span>
+</div>
+<div>
+<h4 class="text-white text-sm font-bold">Disciplined</h4>
+<p class="text-text-secondary text-xs mt-1">30 Day Streak</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Proof of Work / Activity Timeline -->
+<div class="bg-card-dark rounded-2xl p-6 border border-white/5 flex-grow">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-white font-bold text-lg">Proof of Work</h3>
+<div class="flex gap-2">
+<select class="bg-[#101323] text-white text-xs font-medium rounded-lg border-white/10 py-1.5 px-3 focus:ring-primary focus:border-primary">
+<option>All Activity</option>
+<option>Challenges</option>
+<option>Contributions</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Timeline Item 1 -->
+<div class="group flex gap-4 p-4 rounded-xl hover:bg-[#2a325a] transition-colors border border-transparent hover:border-white/5 cursor-pointer">
+<div class="flex-shrink-0 mt-1">
+<div class="size-10 rounded-lg bg-green-500/20 flex items-center justify-center text-accent-green border border-green-500/20">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-white font-bold group-hover:text-primary transition-colors">Optimize React Rendering</h4>
+<span class="text-text-secondary text-xs whitespace-nowrap">2h ago</span>
+</div>
+<p class="text-text-secondary text-sm mb-3">Refactored the dashboard grid to use virtualization, improving load time by 40%.</p>
+<div class="flex flex-wrap gap-4 items-center">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-[#101323] border border-white/5">
+<span class="text-[10px] text-text-secondary uppercase font-bold">Score</span>
+<span class="text-xs font-bold text-white">98/100</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-[#101323] border border-white/5">
+<span class="text-[10px] text-text-secondary uppercase font-bold">XP</span>
+<span class="text-xs font-bold text-accent-green">+500</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-text-secondary ml-auto">
+<span class="material-symbols-outlined text-[14px]">code</span>
+<span>View Code</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 2 -->
+<div class="group flex gap-4 p-4 rounded-xl hover:bg-[#2a325a] transition-colors border border-transparent hover:border-white/5 cursor-pointer">
+<div class="flex-shrink-0 mt-1">
+<div class="size-10 rounded-lg bg-primary/20 flex items-center justify-center text-primary border border-primary/20">
+<span class="material-symbols-outlined text-[20px]">terminal</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-white font-bold group-hover:text-primary transition-colors">API Rate Limiter Implementation</h4>
+<span class="text-text-secondary text-xs whitespace-nowrap">Yesterday</span>
+</div>
+<p class="text-text-secondary text-sm mb-3">Designed and implemented a distributed rate limiter using Redis and Lua scripts.</p>
+<div class="flex flex-wrap gap-4 items-center">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-[#101323] border border-white/5">
+<span class="text-[10px] text-text-secondary uppercase font-bold">Score</span>
+<span class="text-xs font-bold text-white">100/100</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-[#101323] border border-white/5">
+<span class="text-[10px] text-text-secondary uppercase font-bold">XP</span>
+<span class="text-xs font-bold text-accent-green">+750</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-text-secondary ml-auto">
+<span class="material-symbols-outlined text-[14px]">code</span>
+<span>View Code</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Timeline Item 3 -->
+<div class="group flex gap-4 p-4 rounded-xl hover:bg-[#2a325a] transition-colors border border-transparent hover:border-white/5 cursor-pointer">
+<div class="flex-shrink-0 mt-1">
+<div class="size-10 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 border border-purple-500/20">
+<span class="material-symbols-outlined text-[20px]">emoji_events</span>
+</div>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-1">
+<h4 class="text-white font-bold group-hover:text-primary transition-colors">Weekly Algorithm Challenge</h4>
+<span class="text-text-secondary text-xs whitespace-nowrap">3 days ago</span>
+</div>
+<p class="text-text-secondary text-sm mb-3">Solved "Median of Two Sorted Arrays" with O(log (m+n)) complexity.</p>
+<div class="flex flex-wrap gap-4 items-center">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-[#101323] border border-white/5">
+<span class="text-[10px] text-text-secondary uppercase font-bold">Rank</span>
+<span class="text-xs font-bold text-white">#42 Global</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-[#101323] border border-white/5">
+<span class="text-[10px] text-text-secondary uppercase font-bold">XP</span>
+<span class="text-xs font-bold text-accent-green">+300</span>
+</div>
+<div class="flex items-center gap-1 text-xs text-text-secondary ml-auto">
+<span class="material-symbols-outlined text-[14px]">code</span>
+<span>View Code</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 rounded-lg border border-white/10 text-text-secondary text-sm font-bold hover:bg-white/5 hover:text-white transition-colors">
+                        Load More Activity
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

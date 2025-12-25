@@ -71,6 +71,10 @@ export const api = {
   },
 };
 
+export type CreateTaskRequest = z.infer<typeof insertTaskSchema>;
+export type CreateSubmissionRequest = z.infer<typeof insertSubmissionSchema>;
+
+
 export function buildUrl(path: string, params?: Record<string, string | number>): string {
   let url = path;
   if (params) {

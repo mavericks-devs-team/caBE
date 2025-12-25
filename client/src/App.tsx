@@ -1,4 +1,5 @@
 import { Switch, Route } from "wouter";
+import { AuthProvider } from "./hooks/use-auth";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -8,6 +9,7 @@ import NotFound from "@/pages/not-found";
 
 // Pages
 import Home from "@/pages/Home";
+import Auth from "@/pages/Auth";
 import Arena from "@/pages/Arena";
 import TaskDetails from "@/pages/TaskDetails";
 import Dashboard from "@/pages/Dashboard";
@@ -17,6 +19,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Home} />
+      <Route path="/auth" component={Auth} />
       <Route path="/arena" component={Arena} />
       <Route path="/task/:id" component={TaskDetails} />
       <Route path="/dashboard" component={Dashboard} />
@@ -29,11 +32,13 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Navbar />
-        <Router />
-        <Toaster />
-      </TooltipProvider>
+      <AuthProvider>
+        <TooltipProvider>
+          <Navbar />
+          <Router />
+          <Toaster />
+        </TooltipProvider>
+      </AuthProvider>
     </QueryClientProvider>
   );
 }

@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CaBE Arena - Command Center</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;family=Noto+Sans:wght@300..700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#2547f4",
+              "background-light": "#f5f6f8",
+              "background-dark": "#101322",
+              "surface-dark": "#181b2c",
+              "surface-light": "#ffffff",
+              "accent-purple": "#7c3aed",
+              "accent-cyan": "#06b6d4",
+            },
+            fontFamily: {
+              "display": ["Space Grotesk", "sans-serif"],
+              "body": ["Noto Sans", "sans-serif"],
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem", 
+              "lg": "0.5rem", 
+              "xl": "0.75rem", 
+              "2xl": "1rem",
+              "full": "9999px"
+            },
+            boxShadow: {
+                'glow': '0 0 15px -3px rgba(37, 71, 244, 0.3)',
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display antialiased transition-colors duration-200">
+<div class="flex min-h-screen w-full flex-row overflow-hidden">
+<!-- Side Navigation -->
+<aside class="hidden lg:flex w-72 flex-col justify-between border-r border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-[#15192b] p-6 sticky top-0 h-screen z-20">
+<div class="flex flex-col gap-8">
+<!-- Brand -->
+<div class="flex items-center gap-3 px-2">
+<div class="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-glow">
+<span class="material-symbols-outlined text-2xl">hexagon</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-xl font-bold leading-none tracking-tight">CaBE Arena</h1>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">COMMAND CENTER</p>
+</div>
+</div>
+<!-- Navigation -->
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/10 text-primary border border-primary/20 transition-all hover:bg-primary/20" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-bold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">swords</span>
+<span class="text-sm font-medium">Arena</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">trophy</span>
+<span class="text-sm font-medium">Leaderboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-medium">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<!-- Bottom Action -->
+<div class="flex flex-col gap-4">
+<div class="bg-slate-100 dark:bg-slate-800/50 rounded-xl p-4 flex flex-col gap-2 border border-slate-200 dark:border-slate-700">
+<div class="flex justify-between items-center">
+<span class="text-xs font-bold text-slate-400 uppercase">System Status</span>
+<span class="h-2 w-2 rounded-full bg-green-500 animate-pulse"></span>
+</div>
+<p class="text-xs text-slate-500 dark:text-slate-400">Server Time: 14:02 UTC<br/>Ping: 24ms</p>
+</div>
+<button class="flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl h-12 bg-primary text-white text-sm font-bold hover:bg-blue-600 transition-colors shadow-glow group">
+<span class="material-symbols-outlined group-hover:rotate-180 transition-transform">add_circle</span>
+                    New Challenge
+                </button>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 overflow-y-auto h-screen relative scroll-smooth">
+<!-- Mobile Header -->
+<div class="lg:hidden flex items-center justify-between p-4 bg-surface-light dark:bg-[#15192b] border-b border-slate-200 dark:border-slate-800 sticky top-0 z-30">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">hexagon</span>
+<span class="font-bold">CaBE Arena</span>
+</div>
+<button class="text-slate-500"><span class="material-symbols-outlined">menu</span></button>
+</div>
+<div class="p-4 md:p-8 lg:p-12 max-w-[1400px] mx-auto flex flex-col gap-8">
+<!-- Page Heading -->
+<header class="flex flex-col md:flex-row md:items-end justify-between gap-4 animate-[fadeIn_0.5s_ease-out]">
+<div class="flex flex-col gap-1">
+<p class="text-slate-400 dark:text-[#909acb] text-sm font-bold tracking-widest uppercase mb-1">Sector 7 // Command Deck</p>
+<h1 class="text-4xl md:text-5xl font-black leading-tight tracking-tight text-slate-900 dark:text-white">
+                            Command Center
+                        </h1>
+<p class="text-slate-500 dark:text-[#909acb] text-lg font-normal">
+                            Welcome back, Agent. <span class="text-green-500 font-bold">Status: Online.</span>
+</p>
+</div>
+<div class="flex gap-3">
+<div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-yellow-500 text-[20px]">bolt</span>
+<span class="text-sm font-bold">12 Day Streak</span>
+</div>
+</div>
+</header>
+<!-- Hero Section: Identity & Progress -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6 animate-[fadeIn_0.7s_ease-out]">
+<!-- Identity Card -->
+<div class="col-span-1 xl:col-span-2 bg-surface-light dark:bg-surface-dark rounded-2xl p-6 border border-slate-200 dark:border-slate-700/60 shadow-sm relative overflow-hidden group">
+<!-- Abstract BG Decoration -->
+<div class="absolute top-0 right-0 w-64 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
+<div class="flex flex-col md:flex-row gap-6 relative z-10 h-full">
+<!-- Avatar -->
+<div class="relative flex-shrink-0">
+<div class="w-24 h-24 md:w-32 md:h-32 rounded-2xl bg-slate-800 bg-cover bg-center ring-4 ring-slate-100 dark:ring-[#2a3044]" data-alt="User avatar with cyberpunk neon glasses" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBJV-r8nHmji54OmPhjBlmq1DIgAEma02-IkvH34PiVuH6rsoj2lH1LPerVr3bO3d0WsG2l93ADG3oU9DQOvBeuYd78uM-g7XjEFzAOKBUajNitjCE78htYB6aOrHySN8ig__wHY1G0q1TJ7qlM17x03CGxWz8VboUJ75vtBQMxcAeaT1vwhf-IzNpXgz2LP-7TobdEiWrjmtWRbzavjkY6o-SDKs0isWdxbUy-ln2JNrY6YJdPh2u4XYAf8fvBwds9Y6vWvowqHLCJ");'>
+</div>
+<div class="absolute -bottom-3 -right-3 bg-slate-900 text-white text-xs font-bold px-3 py-1 rounded-lg border border-slate-700 shadow-lg flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-slate-400">verified</span>
+                                    Lvl 24
+                                </div>
+</div>
+<!-- Info -->
+<div class="flex flex-col justify-between flex-1 py-1">
+<div>
+<div class="flex items-center gap-3 mb-1">
+<span class="bg-slate-200 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">Current Rank</span>
+</div>
+<h2 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-white mb-1">Silver II Full-Stack Dev</h2>
+<p class="text-slate-500 dark:text-[#909acb]">Top 15% Global Percentile • Backend Specialist</p>
+</div>
+<!-- Progress Bar -->
+<div class="mt-6">
+<div class="flex justify-between items-end mb-2">
+<span class="text-sm font-bold text-slate-400 dark:text-slate-400 uppercase tracking-wider">Progress to Gold Tier</span>
+<div class="text-right">
+<span class="text-lg font-bold text-primary">1,250</span>
+<span class="text-sm text-slate-500">/ 2,000 XP</span>
+</div>
+</div>
+<div class="h-3 w-full bg-slate-200 dark:bg-[#2a3044] rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-primary to-accent-cyan w-[62%] rounded-full relative">
+<div class="absolute inset-0 bg-white/20 animate-[shimmer_2s_infinite]"></div>
+</div>
+</div>
+<p class="text-xs text-right mt-2 text-slate-400 font-mono">+750 XP needed for promotion</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Mini Stats Grid -->
+<div class="grid grid-rows-3 gap-4 h-full">
+<div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700/60 rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-orange-500/10 rounded-lg text-orange-500">
+<span class="material-symbols-outlined">local_fire_department</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 dark:text-slate-400 uppercase font-bold">Current Streak</span>
+<span class="text-lg font-bold dark:text-white">12 Days</span>
+</div>
+</div>
+<span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded">+2 today</span>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700/60 rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-accent-purple/10 rounded-lg text-accent-purple">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 dark:text-slate-400 uppercase font-bold">Total Solves</span>
+<span class="text-lg font-bold dark:text-white">142</span>
+</div>
+</div>
+<span class="text-slate-500 text-xs font-bold px-2 py-1 rounded">Top 5%</span>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700/60 rounded-xl p-4 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-accent-cyan/10 rounded-lg text-accent-cyan">
+<span class="material-symbols-outlined">public</span>
+</div>
+<div class="flex flex-col">
+<span class="text-xs text-slate-500 dark:text-slate-400 uppercase font-bold">Global Rank</span>
+<span class="text-lg font-bold dark:text-white">#4,291</span>
+</div>
+</div>
+<span class="text-green-500 text-xs font-bold bg-green-500/10 px-2 py-1 rounded">▲ 124</span>
+</div>
+</div>
+</div>
+<!-- Primary Directive (CTA) -->
+<section class="animate-[fadeIn_0.9s_ease-out]">
+<div class="group relative overflow-hidden rounded-2xl bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700 shadow-lg dark:shadow-none hover:border-primary/50 transition-colors duration-300">
+<div class="absolute top-0 left-0 w-1 h-full bg-primary"></div>
+<div class="flex flex-col lg:flex-row">
+<!-- Image/Visual Side -->
+<div class="lg:w-1/3 min-h-[200px] bg-slate-800 relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-60 group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Abstract visualization of a network API structure glowing blue" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBiimHQs7kFcx4SJ33lKnAaZq7EBs8mRaSqlAydBw45Dgs4H4LrTtfUymFxx4YoxEt5ITTcUy-MD6jQYMDxVRV5j9VsrqoZf69fM4AWEpUp60FETptV2pdDmKnwHO_Pv3pCjEA7RN4yxy91l-afm-h7X2wIjADOzUYVBCkvLcLfeGOAKZWdGhGu-ziWjkG-aSmGwAaSdchGDipqwmT5rqg78q6Ivm2jLPZVDWymfDTDTDhH6_I5tnA3ij1yNF7Jvwn3tf8kgYFroLzL");'>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-surface-dark via-transparent to-transparent"></div>
+<div class="absolute top-4 left-4">
+<span class="bg-primary/90 text-white text-xs font-bold px-3 py-1 rounded backdrop-blur-sm">PRIMARY DIRECTIVE</span>
+</div>
+</div>
+<!-- Content Side -->
+<div class="flex-1 p-6 lg:p-8 flex flex-col justify-center gap-4">
+<div class="flex flex-wrap items-start justify-between gap-4">
+<div>
+<h3 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">Mission: API Integration Challenge</h3>
+<p class="text-slate-500 dark:text-slate-400 max-w-xl text-sm leading-relaxed">
+                                            Your directive is to build a secure RESTful API endpoint using Node.js. This task is critical for your progression to Gold Tier. Efficiency and error handling will be evaluated.
+                                        </p>
+</div>
+<div class="flex flex-col items-end gap-1">
+<div class="flex items-center gap-1 text-yellow-500">
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm">star</span>
+<span class="material-symbols-outlined text-sm opacity-30">star</span>
+<span class="material-symbols-outlined text-sm opacity-30">star</span>
+</div>
+<span class="text-xs font-mono text-slate-400 uppercase">Difficulty: Hard</span>
+</div>
+</div>
+<div class="h-px w-full bg-slate-200 dark:bg-slate-700/50 my-2"></div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="flex items-center gap-6 w-full sm:w-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400">schedule</span>
+<span class="text-sm font-medium text-slate-300">Est: 45m</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">military_tech</span>
+<span class="text-sm font-bold text-primary">+300 XP</span>
+</div>
+<div class="flex items-center gap-2 hidden md:flex">
+<span class="material-symbols-outlined text-slate-400">code</span>
+<span class="text-sm font-medium text-slate-300">Node.js, REST</span>
+</div>
+</div>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 px-6 h-10 bg-primary hover:bg-blue-600 text-white text-sm font-bold rounded-lg transition-all shadow-glow hover:shadow-[0_0_20px_rgba(37,71,244,0.5)]">
+                                        Initialize Task
+                                        <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Battle Log (Activity) -->
+<section class="animate-[fadeIn_1.0s_ease-out]">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-500">history</span>
+                            Battle Log
+                        </h3>
+<button class="text-xs font-bold text-primary hover:text-blue-400 uppercase">View All</button>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark border border-slate-200 dark:border-slate-700/60 rounded-xl overflow-hidden">
+<!-- Item 1 -->
+<div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-[#1f2436] transition-colors">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500">
+<span class="material-symbols-outlined text-xl">check_circle</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Completed: Python Data Structures</p>
+<p class="text-xs text-slate-500">Foundations Module</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-primary">+50 XP</p>
+<p class="text-xs text-slate-500">2h ago</p>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-[#1f2436] transition-colors">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-500 dark:text-slate-300">
+<span class="material-symbols-outlined text-xl">trending_up</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Rank Up: Silver I</p>
+<p class="text-xs text-slate-500">System Notification</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-slate-400">---</p>
+<p class="text-xs text-slate-500">Yesterday</p>
+</div>
+</div>
+<!-- Item 3 -->
+<div class="flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-[#1f2436] transition-colors">
+<div class="flex items-center gap-4">
+<div class="h-10 w-10 rounded-full bg-red-500/10 flex items-center justify-center text-red-500">
+<span class="material-symbols-outlined text-xl">close</span>
+</div>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Failed Attempt: React Hooks</p>
+<p class="text-xs text-slate-500">Challenge Arena</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-sm font-bold text-red-400">-10 XP</p>
+<p class="text-xs text-slate-500">2 days ago</p>
+</div>
+</div>
+</div>
+</section>
+<footer class="mt-8 mb-4 text-center">
+<p class="text-xs text-slate-500 dark:text-slate-600 font-mono">CaBE Arena v2.4.0 // TERMINAL_ID: 8821X // <a class="underline hover:text-slate-400" href="#">Privacy Protocol</a></p>
+</footer>
+</div>
+</main>
+</div>
+<style>
+        /* Custom Shimmer Animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-150%) skewX(-15deg); }
+            100% { transform: translateX(150%) skewX(-15deg); }
+        }
+        
+        /* Fade In Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar Styling for Webkit */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101322; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a3044; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3a425e; 
+        }
+    </style>
+</body></html>

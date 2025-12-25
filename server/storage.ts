@@ -21,7 +21,7 @@ export interface IStorage {
   createTask(task: InsertTask): Promise<Task>;
 
   // Submissions
-  createSubmission(submission: InsertSubmission): Promise<Submission>;
+  createSubmission(submission: typeof submissions.$inferInsert): Promise<Submission>;
   getUserSubmissions(userId: string): Promise<(Submission & { task: Task | null })[]>;
 }
 
@@ -63,7 +63,7 @@ export class DatabaseStorage implements IStorage {
     return newTask;
   }
 
-  async createSubmission(submission: InsertSubmission): Promise<Submission> {
+  async createSubmission(submission: typeof submissions.$inferInsert): Promise<Submission> {
     const [newSubmission] = await db.insert(submissions).values(submission).returning();
     return newSubmission;
   }

@@ -5,11 +5,6 @@ export default {
   content: ["./client/index.html", "./client/src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
-      borderRadius: {
-        lg: ".5625rem", /* 9px */
-        md: ".375rem", /* 6px */
-        sm: ".1875rem", /* 3px */
-      },
       colors: {
         // Flat / base colors (regular buttons)
         background: "hsl(var(--background) / <alpha-value>)",
@@ -81,13 +76,28 @@ export default {
           busy: "rgb(239 68 68)",
           offline: "rgb(156 163 175)",
         },
+        // Stitch Design System Colors
+        'background-light': '#f5f6f8',
+        'background-dark': '#101322',
+        'background-darker': '#0b0d17',
+        'card-bg': '#16192b',
+        'card-bg-alt': '#1a1d2e',
+        'card-bg-lighter': '#131625',
+        'border-dark': '#222949',
+        'border-darker': '#1e2338',
       },
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
-        mono: ["var(--font-mono)"],
-        display: ["var(--font-display)"],
-        body: ["var(--font-body)"],
+        // Stitch fonts
+        display: ['Space Grotesk', 'sans-serif'],
+        body: ['Noto Sans', 'sans-serif'],
+        // Keep existing
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        mono: ['JetBrains Mono', 'monospace'],
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       keyframes: {
         "accordion-down": {

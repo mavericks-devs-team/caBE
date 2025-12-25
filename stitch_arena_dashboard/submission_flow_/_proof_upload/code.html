@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CaBE Arena - Submit Proof of Work</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2547f4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101322",
+                        "surface-dark": "#181d34",
+                        "border-dark": "#222949",
+                        "text-dim": "#909acb"
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>/* Custom Scrollbar for a tech feel */
+::-webkit-scrollbar {
+    width: 8px
+    }
+::-webkit-scrollbar-track {
+    background: #101322
+    }
+::-webkit-scrollbar-thumb {
+    background: #222949;
+    border-radius: 4px
+    }
+/* Subtle Grid Animation Background */
+.bg-grid-pattern {
+    background-image: linear-gradient(to right, #222949 1px, transparent 1px), linear-gradient(to bottom, #222949 1px, transparent 1px);
+    background-size: 40px 40px;
+    mask-image: linear-gradient(to bottom, transparent, black, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 5%, black 40%, black 70%, transparent 95%)
+    }
+/* Checkbox Custom Styling */
+.custom-checkbox:checked {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBtAJDZII8kue975c5eDJh7p1OBBSVCtS86D52wQ9vtxqcgdTiql4tYRAJXWymZ3aQCENr3NGdN4igGR77JP7gZg5h9s4wdIozhwvjBVbVQvIqCgZiKlnM1gnctNYJF15uIqH77WJUCvQItI7Z5875lo8g167w7rbWkJRxPlGiPyUBTjswg0XWwjb-DgzhyngpW6ia6Re5bTBmBsbolp3r_pTy4Aq5U2uod4AqVXhp9pxzrMIlf4nd0u0Eke4t9yVva5YoGqSbUbxr9)
+    }</style>
+</head>
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex flex-col font-display text-white selection:bg-primary selection:text-white overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="w-full border-b border-border-dark bg-background-dark/80 backdrop-blur-md sticky top-0 z-50">
+<div class="max-w-[1440px] mx-auto px-4 sm:px-8 h-16 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">hexagon</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">CaBE Arena</h2>
+</div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-text-dim hover:text-white text-sm font-medium transition-colors" href="#">Dashboard</a>
+<a class="text-white text-sm font-medium transition-colors relative after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-primary after:-bottom-5 after:left-0" href="#">Arena</a>
+<a class="text-text-dim hover:text-white text-sm font-medium transition-colors" href="#">Leaderboard</a>
+<a class="text-text-dim hover:text-white text-sm font-medium transition-colors" href="#">Quests</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="size-10 flex items-center justify-center rounded-lg hover:bg-surface-dark text-text-dim hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<div class="h-8 w-px bg-border-dark"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold leading-none">AlexDev</p>
+<p class="text-xs text-text-dim font-mono mt-1">Rank: Bronze I</p>
+</div>
+<div class="size-10 rounded-full bg-surface-dark border border-border-dark overflow-hidden relative">
+<img alt="User avatar profile picture" class="object-cover w-full h-full" data-alt="User avatar showing a young man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDPhekYRX3GgfAhve99bJ8RJ057CTrkxMRM0dfMrT62juioAXKFXRWawS2kKZ0ZU2JRoV0zJebZEWlkmRbGsZpk_QufJrJrbAm3rrEpDKFZtNhbkVe43ojdN1YqEfwB2tGlDcBK6zQsrdhPh5s7yQoSgSheQx1YU-c4V5_AZajLxDqpDHLXNJgFdNWNcETt61NhvAUpZsvQUtcWNmVsN-V4liRfO1gKpHeDXRuwinA3faW4N6NKU_nvOW82MrSv_rcPH3exEwCKThW4"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow flex flex-col items-center justify-center p-4 sm:p-6 relative">
+<!-- Ambient Background Glow -->
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+<div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-600/10 rounded-full blur-[100px] pointer-events-none"></div>
+<!-- Submission Container -->
+<div class="w-full max-w-4xl relative z-10">
+<!-- Breadcrumb / Status Line -->
+<div class="flex items-center gap-2 mb-6 text-xs font-mono text-primary/80 uppercase tracking-widest opacity-80">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span>System</span>
+<span class="text-border-dark">/</span>
+<span>Upload_Protocol</span>
+<span class="text-border-dark">/</span>
+<span class="text-white animate-pulse">Awaiting_Input</span>
+</div>
+<!-- Main Card -->
+<div class="bg-surface-dark/60 backdrop-blur-xl border border-border-dark rounded-2xl overflow-hidden shadow-2xl ring-1 ring-white/5">
+<!-- Card Header with Rank Vis -->
+<div class="p-6 sm:p-10 border-b border-border-dark bg-surface-dark/40 relative">
+<!-- Subtle pattern overlay -->
+<div class="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none"></div>
+<div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6">
+<div class="space-y-2 max-w-lg">
+<h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Submit Proof of Work</h1>
+<p class="text-text-dim text-base">Compile your artifacts. Upload evidence to initiate the audit process for rank promotion.</p>
+</div>
+<!-- Rank Progression Visualizer -->
+<div class="flex items-center gap-4 bg-[#101322] px-4 py-3 rounded-lg border border-border-dark shadow-inner min-w-[280px]">
+<div class="flex flex-col items-center gap-1 opacity-60">
+<span class="material-symbols-outlined text-[#cd7f32]">military_tech</span>
+<span class="text-[10px] font-bold tracking-wider text-[#cd7f32] uppercase">Bronze I</span>
+</div>
+<!-- Animated Connection Line -->
+<div class="flex-1 h-0.5 bg-border-dark relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-primary to-transparent w-1/2 h-full animate-[shimmer_2s_infinite]"></div>
+</div>
+<div class="flex flex-col items-center gap-1 relative">
+<div class="absolute -inset-2 bg-primary/20 blur-lg rounded-full animate-pulse"></div>
+<span class="material-symbols-outlined text-white relative z-10">verified</span>
+<span class="text-[10px] font-bold tracking-wider text-white uppercase relative z-10">Silver II</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Card Body / Form -->
+<div class="p-6 sm:p-10 space-y-8">
+<!-- Dual Input Zone -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- 1. External Link Input -->
+<div class="flex flex-col gap-3">
+<label class="text-sm font-bold uppercase tracking-wider text-text-dim flex items-center gap-2" for="repo-link">
+<span class="material-symbols-outlined text-base">link</span>
+                                Repository Link
+                            </label>
+<div class="group relative">
+<input class="w-full bg-[#101322] border border-border-dark rounded-xl h-14 px-4 pl-12 text-white placeholder:text-text-dim/50 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all outline-none font-mono text-sm" id="repo-link" placeholder="https://github.com/username/project-repo" type="text"/>
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-text-dim group-focus-within:text-primary transition-colors">hub</span>
+<!-- Validation Indicator (Empty for now, appears on interaction) -->
+<div class="absolute right-4 top-1/2 -translate-y-1/2 text-green-500 opacity-0 transition-opacity">
+<span class="material-symbols-outlined">check_circle</span>
+</div>
+</div>
+<p class="text-xs text-text-dim pl-1">Supported: GitHub, GitLab, Bitbucket, or public portfolio archives.</p>
+</div>
+<!-- 2. File Upload Dropzone -->
+<div class="flex flex-col gap-3">
+<label class="text-sm font-bold uppercase tracking-wider text-text-dim flex items-center gap-2">
+<span class="material-symbols-outlined text-base">folder_zip</span>
+                                Artifact Archive
+                            </label>
+<div class="relative group cursor-pointer">
+<!-- Dashed Border Container -->
+<div class="w-full h-32 rounded-xl border-2 border-dashed border-border-dark bg-[#101322]/50 hover:bg-[#101322] hover:border-primary/50 transition-all flex flex-col items-center justify-center gap-3 group-hover:shadow-[0_0_20px_rgba(37,71,244,0.1)]">
+<div class="size-10 rounded-full bg-surface-dark flex items-center justify-center text-primary group-hover:scale-110 transition-transform duration-300">
+<span class="material-symbols-outlined">cloud_upload</span>
+</div>
+<div class="text-center">
+<p class="text-sm text-white font-medium">Drag archive here or <span class="text-primary underline decoration-primary/30 underline-offset-4">browse</span></p>
+<p class="text-[10px] text-text-dim mt-1 uppercase tracking-wider">MAX 50MB • .ZIP .TAR .GZ</p>
+</div>
+</div>
+<input class="absolute inset-0 opacity-0 cursor-pointer" type="file"/>
+</div>
+</div>
+</div>
+<!-- Divider -->
+<div class="h-px w-full bg-gradient-to-r from-transparent via-border-dark to-transparent"></div>
+<!-- Originality Pledge -->
+<div class="bg-primary/5 border border-primary/20 rounded-xl p-5 flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+<div class="p-2 bg-primary/10 rounded-lg text-primary shrink-0">
+<span class="material-symbols-outlined">fingerprint</span>
+</div>
+<div class="flex-1">
+<h3 class="text-white font-bold text-sm">Proof of Originality Protocol</h3>
+<p class="text-text-dim text-xs mt-1">Plagiarism detection algorithms will scan your submission against 40M+ repositories.</p>
+</div>
+<div class="flex items-center gap-3 shrink-0 pt-2 sm:pt-0">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="peer sr-only custom-checkbox" type="checkbox"/>
+<div class="w-5 h-5 rounded border-2 border-text-dim peer-checked:bg-primary peer-checked:border-primary transition-all flex items-center justify-center peer-focus:ring-2 peer-focus:ring-primary/40 relative">
+<!-- Tick is handled via CSS background-image for cleanliness -->
+</div>
+<span class="text-sm text-white group-hover:text-primary transition-colors select-none font-medium">I verify this is my work</span>
+</label>
+</div>
+</div>
+<!-- Action Area -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-6 pt-2">
+<!-- Terminal-like status log -->
+<div class="hidden sm:flex flex-col gap-1 font-mono text-[10px] text-text-dim/60 w-full max-w-xs">
+<p>&gt; Initializing secure channel...</p>
+<p>&gt; User_ID: 8829-AX verified</p>
+</div>
+<!-- Commit Button -->
+<button class="w-full sm:w-auto min-w-[200px] h-14 bg-primary hover:bg-blue-600 active:scale-[0.98] rounded-xl flex items-center justify-center gap-3 text-white font-bold tracking-wide shadow-[0_0_20px_rgba(37,71,244,0.3)] hover:shadow-[0_0_30px_rgba(37,71,244,0.5)] transition-all relative overflow-hidden group">
+<!-- Button Content -->
+<span class="material-symbols-outlined relative z-10 transition-transform group-hover:rotate-12">rocket_launch</span>
+<span class="relative z-10 uppercase text-sm">Commit Proof</span>
+<!-- Hover Shine Effect -->
+<div class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12"></div>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Hints -->
+<div class="mt-6 text-center">
+<p class="text-text-dim text-xs">
+                    Need help packing your artifact? 
+                    <a class="text-primary hover:text-white transition-colors underline decoration-dotted underline-offset-4" href="#">Read Documentation</a>
+</p>
+</div>
+</div>
+</main>
+<script>
+        // Optional JS only for animation config or simple interactive states if requested, keeping it strictly minimal as per instructions.
+        // No JS logic added as per "DO NOT add any JavaScript or React code" rule for logic.
+    </script>
+</body></html>

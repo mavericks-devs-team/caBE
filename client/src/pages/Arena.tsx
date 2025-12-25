@@ -1,98 +1,111 @@
-import { useState } from "react";
 import { useTasks } from "@/hooks/use-tasks";
 import { useSubmissions } from "@/hooks/use-submissions";
 import { TaskCard } from "@/components/ui/TaskCard";
-import { Search, Filter } from "lucide-react";
+import { Lock, Star, Zap, ShieldAlert, Crosshair } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Arena() {
   const { data: tasks, isLoading: tasksLoading } = useTasks();
   const { data: submissions } = useSubmissions();
-  
-  const [search, setSearch] = useState("");
-  const [categoryFilter, setCategoryFilter] = useState<string | null>(null);
 
   const completedTaskIds = new Set(
     submissions?.filter(s => s.status === "approved").map(s => s.taskId) || []
   );
 
-  const categories = Array.from(new Set(tasks?.map(t => t.category) || []));
+  // ZONES LOGIC
+  // 1. Mission: First non-completed Medium task (or Easy if no Medium)
+  // 2. Training: All Easy tasks
+  // 3. High Stakes: Medium + Hard tasks
 
-  const filteredTasks = tasks?.filter(task => {
-    const matchesSearch = task.title.toLowerCase().includes(search.toLowerCase()) || 
-                          task.description.toLowerCase().includes(search.toLowerCase());
-    const matchesCategory = categoryFilter ? task.category === categoryFilter : true;
-    return matchesSearch && matchesCategory;
-  });
+  const availableTasks = tasks?.filter(t => !completedTaskIds.has(t.id)) || [];
+
+  // Mission Logic
+  const missionTask = availableTasks.find(t => t.difficulty === "Medium") || availableTasks[0];
+
+  // Zone 1: Training (Easy, excluding mission)
+  const trainingTasks = availableTasks.filter(t => t.difficulty === "Easy" && t.id !== missionTask?.id);
+
+  // Zone 2: High Stakes (Medium/Hard, excluding mission)
+  const highStakesTasks = availableTasks.filter(t => (t.difficulty === "Medium" || t.difficulty === "Hard") && t.id !== missionTask?.id);
 
   return (
     <div className="min-h-screen pt-24 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-        <div>
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-2">The Arena</h1>
-          <p className="text-muted-foreground">Select a challenge and prove your worth.</p>
-        </div>
-
-        {/* Filters */}
-        <div className="flex flex-col sm:flex-row gap-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <input 
-              type="text" 
-              placeholder="Search tasks..." 
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full sm:w-64 pl-10 pr-4 py-2.5 rounded-xl bg-card border border-border text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/50 transition-all"
-            />
-          </div>
-          
-          <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 no-scrollbar">
-            <button
-              onClick={() => setCategoryFilter(null)}
-              className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-all whitespace-nowrap cursor-pointer
-                ${!categoryFilter 
-                  ? "bg-white text-black border-white" 
-                  : "bg-transparent text-muted-foreground border-border hover:border-white/50"}`}
-            >
-              All
-            </button>
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setCategoryFilter(cat)}
-                className={`px-4 py-2.5 rounded-xl text-sm font-medium border transition-all whitespace-nowrap cursor-pointer
-                  ${categoryFilter === cat 
-                    ? "bg-secondary/20 text-secondary border-secondary" 
-                    : "bg-transparent text-muted-foreground border-border hover:border-white/50"}`}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-        </div>
+      <div className="mb-12">
+        <h1 className="text-4xl md:text-5xl font-display font-bold text-white mb-2">The Arena</h1>
+        <p className="text-muted-foreground">Select your battlefield.</p>
       </div>
 
       {tasksLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[1, 2, 3, 4, 5, 6].map((n) => (
-            <div key={n} className="h-64 rounded-2xl bg-card/50 border border-border animate-pulse" />
-          ))}
-        </div>
-      ) : filteredTasks?.length === 0 ? (
-        <div className="text-center py-20 bg-card/30 rounded-3xl border border-white/5">
-          <Filter className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-          <h3 className="text-xl font-bold text-white mb-2">No tasks found</h3>
-          <p className="text-muted-foreground">Try adjusting your filters or search terms.</p>
-        </div>
+        <div className="animate-pulse h-64 bg-card/30 rounded-3xl" />
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredTasks?.map((task) => (
-            <TaskCard 
-              key={task.id} 
-              task={task} 
-              isCompleted={completedTaskIds.has(task.id)}
-            />
-          ))}
+        <div className="space-y-16">
+
+          {/* 1. RECOMMENDED MISSION */}
+          {missionTask && (
+            <section>
+              <div className="flex items-center gap-2 mb-4 text-primary">
+                <Crosshair className="w-5 h-5" />
+                <h2 className="text-lg font-mono font-bold uppercase tracking-wider">Priority Assignment</h2>
+              </div>
+              <div className="p-1 rounded-3xl bg-gradient-to-r from-primary/50 via-primary/20 to-transparent">
+                <div className="bg-background rounded-[22px]">
+                  <TaskCard task={missionTask} isHero />
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* 2. ZONE 1: TRAINING GROUNDS */}
+          <section>
+            <div className="flex items-center gap-2 mb-6">
+              <ShieldAlert className="w-5 h-5 text-green-400" />
+              <div>
+                <h2 className="text-xl font-bold text-white">Training Grounds</h2>
+                <p className="text-xs text-muted-foreground font-mono uppercase tracking-widest">Low Risk • Steady Progress</p>
+              </div>
+            </div>
+
+            {trainingTasks.length > 0 ? (
+              <div className="flex gap-6 overflow-x-auto pb-6 -mx-4 px-4 snap-x no-scrollbar md:grid md:grid-cols-3 md:overflow-visible md:pb-0 md:px-0">
+                {trainingTasks.map(task => (
+                  <div key={task.id} className="min-w-[300px] snap-center">
+                    <TaskCard task={task} />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-8 rounded-2xl bg-card/20 border border-white/5 text-center text-muted-foreground text-sm">
+                Sector Cleared. No basic training modules remaining.
+              </div>
+            )}
+          </section>
+
+          {/* 3. ZONE 2: HIGH STAKES */}
+          <section>
+            <div className="flex items-center gap-2 mb-6">
+              <Zap className="w-5 h-5 text-yellow-500" />
+              <div>
+                <h2 className="text-xl font-bold text-white">High Stakes Sector</h2>
+                <p className="text-xs text-muted-foreground font-mono uppercase tracking-widest">Maximum Glory • High Difficulty</p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {highStakesTasks.map(task => (
+                <TaskCard key={task.id} task={task} />
+              ))}
+
+              {/* CLASSIFIED / LOCKED */}
+              <div className="h-full min-h-[200px] rounded-2xl bg-card/10 border border-white/5 flex flex-col items-center justify-center text-muted-foreground/50 gap-3 p-6 text-center">
+                <Lock className="w-8 h-8 opacity-50" />
+                <div>
+                  <div className="font-mono font-bold text-sm">CLASSIFIED</div>
+                  <div className="text-xs mt-1">Requires GOLD Rank</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
         </div>
       )}
     </div>

@@ -4,11 +4,34 @@ import * as schema from "@shared/schema";
 
 const { Pool } = pg;
 
-if (!process.env.DATABASE_URL) {
-  throw new Error(
-    "DATABASE_URL must be set. Did you forget to provision a database?",
-  );
-}
+export let pool: pg.Pool;
+export let db: ReturnType<typeof drizzle<typeof schema>>;
 
-export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const db = drizzle(pool, { schema });
+if (!process.env.DATABASE_URL) {
+  console.warn("⚠️  DATABASE_URL not set. Running without Postgres (Firebase mode).");
+
+  // Simple mock that returns empty arrays for all queries
+  const emptyResult = Promise.resolve([]);
+  const chainable: any = new Proxy({}, {
+    get: () => chainable,
+    apply: () => emptyResult
+  });
+
+  // @ts-expect-error - Mock DB for Firebase migration
+  db = new Proxy({}, {
+    get: (_, prop) => {
+      if (prop === 'query') {
+        return new Proxy({}, {
+          get: () => ({
+            findMany: () => emptyResult,
+            findFirst: () => Promise.resolve(null)
+          })
+        });
+      }
+      return () => chainable;
+    }
+  });
+} else {
+  pool = new Pool({ connectionString: process.env.DATABASE_URL });
+  db = drizzle(pool, { schema });
+}

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CaBE Arena - Verify Your Skills</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2547f4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased overflow-x-hidden">
+<!-- Navbar -->
+<header class="sticky top-0 z-50 w-full border-b border-[#222949] bg-[#101322]/80 backdrop-blur-md">
+<div class="px-4 md:px-10 py-4 flex items-center justify-between max-w-[1280px] mx-auto">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">token</span>
+</div>
+<h2 class="text-white text-xl font-bold tracking-tight">CaBE Arena</h2>
+</div>
+<nav class="hidden md:flex flex-1 justify-end gap-8 items-center">
+<div class="flex items-center gap-8">
+<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">The Arena</a>
+<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">Ranks</a>
+<a class="text-slate-300 hover:text-white text-sm font-medium transition-colors" href="#">For Companies</a>
+</div>
+<div class="flex items-center gap-4 border-l border-[#222949] pl-8">
+<a class="text-white text-sm font-medium" href="#">Sign In</a>
+<button class="bg-primary hover:bg-primary/90 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-colors">
+                        Start Your Climb
+                    </button>
+</div>
+</nav>
+<button class="md:hidden text-white">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<!-- Hero Section -->
+<section class="relative flex flex-col items-center justify-center min-h-[85vh] px-4 py-20 overflow-hidden">
+<!-- Abstract Background Elements -->
+<div class="absolute inset-0 z-0">
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-[128px]"></div>
+<div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-600/10 rounded-full blur-[128px]"></div>
+<!-- Grid Pattern Overlay -->
+<div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/20')] opacity-[0.03] bg-repeat"></div>
+</div>
+<div class="relative z-10 container max-w-5xl mx-auto text-center flex flex-col items-center gap-8">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/50 border border-slate-700 text-slate-300 text-xs font-medium uppercase tracking-wider mb-4">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+                Season 4 is Live
+            </div>
+<h1 class="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter leading-[0.9] text-white">
+                YOUR SKILLS.<br/>
+<span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-purple-400">VERIFIED.</span>
+</h1>
+<p class="max-w-2xl text-lg md:text-xl text-slate-400 font-light leading-relaxed">
+                Stop sending resumes. Start showing proof. Enter the Arena where rank is earned through code, not claimed on PDF.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 mt-4 w-full justify-center">
+<button class="flex items-center justify-center gap-2 h-14 px-8 bg-primary hover:bg-blue-600 text-white text-lg font-bold rounded-lg transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(37,71,244,0.3)]">
+<span class="material-symbols-outlined">swords</span>
+                    Start Your Climb
+                </button>
+<button class="flex items-center justify-center gap-2 h-14 px-8 bg-slate-800 hover:bg-slate-700 text-white text-lg font-medium rounded-lg border border-slate-700 transition-colors">
+                    Explore Ranks
+                </button>
+</div>
+<!-- Hero Image / Visual -->
+<div class="mt-16 w-full max-w-4xl relative group">
+<div class="absolute -inset-1 bg-gradient-to-r from-primary to-purple-600 rounded-xl opacity-30 blur group-hover:opacity-50 transition duration-1000"></div>
+<div class="relative w-full aspect-[16/9] bg-slate-900 rounded-xl overflow-hidden border border-slate-800 shadow-2xl">
+<div class="absolute inset-0 bg-cover bg-center opacity-80" data-alt="Futuristic dashboard interface showing code editor and rank progress stats" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCrkes9oNtDoGVDy_xMyenTcSdl2yLrxiXTpI1B1LK58MzQ7JQPmt4AVa-lRTDzmQYOzP7gcR_tgIEdtHWTpP_CPUefjAqjBOlXIAzrmtUzpln4AoWZaiECtTDR2BFy8KFxljllg3066QpyqlXBYyg2HhX3O_CA8V0Tr_gCLkXb3iUM5grxQi8z4nqN_3hnSYG3yt_jcZFRs10lC3EjPN8f8L0qmRaF0OsRgmVlv72l35zVIflBGXJnbnw8wt2uWwSMpcfL4ItZzhap');"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-[#101322] via-transparent to-transparent"></div>
+<!-- Floating UI Element simulation -->
+<div class="absolute bottom-6 left-6 right-6 flex items-center justify-between p-4 bg-slate-900/90 backdrop-blur-md rounded-lg border border-slate-700/50">
+<div class="flex items-center gap-4">
+<div class="h-12 w-12 rounded-full bg-gradient-to-tr from-yellow-600 to-yellow-300 flex items-center justify-center shadow-lg">
+<span class="material-symbols-outlined text-black font-bold">military_tech</span>
+</div>
+<div>
+<h3 class="text-white font-bold text-sm">Rank Up: Gold Tier</h3>
+<p class="text-slate-400 text-xs">Unlocked by completing "Distributed Systems II"</p>
+</div>
+</div>
+<div class="hidden sm:block text-right">
+<p class="text-primary font-bold text-xl">Top 5%</p>
+<p class="text-slate-500 text-xs uppercase tracking-wide">Global Ranking</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Ticker Section -->
+<div class="w-full bg-[#0b0d17] border-y border-slate-800 overflow-hidden py-3">
+<div class="container mx-auto max-w-[1280px] px-4 flex items-center gap-6">
+<span class="flex items-center gap-1 text-green-500 text-xs font-bold uppercase tracking-wider whitespace-nowrap">
+<span class="material-symbols-outlined text-sm">circle</span> Live Arena Feed
+            </span>
+<div class="flex-1 overflow-hidden relative">
+<p class="text-slate-400 text-sm font-mono whitespace-nowrap flex gap-12">
+<span class="flex items-center gap-2"><span class="text-white font-bold">Alex K.</span> reached <span class="text-yellow-400">Gold Tier</span></span>
+<span class="flex items-center gap-2"><span class="text-white font-bold">Sarah M.</span> just deployed <span class="text-primary">Node.js Challenge</span></span>
+<span class="flex items-center gap-2"><span class="text-white font-bold">Marcus R.</span> unlocked <span class="text-cyan-400">Platinum Status</span></span>
+<span class="flex items-center gap-2"><span class="text-white font-bold">DevTeam_One</span> is hiring <span class="text-primary">Silver+</span></span>
+<span class="flex items-center gap-2 opacity-50"><span class="text-white font-bold">Elena D.</span> started <span class="text-orange-400">Bronze Trials</span></span>
+</p>
+<div class="absolute top-0 right-0 w-24 h-full bg-gradient-to-l from-[#0b0d17] to-transparent"></div>
+</div>
+</div>
+</div>
+<!-- Value Proposition (Proof > Potential) -->
+<section class="py-24 px-4 bg-[#101322]">
+<div class="container mx-auto max-w-6xl">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-5xl font-black text-white mb-6">PROOF &gt; POTENTIAL</h2>
+<p class="text-lg text-slate-400 max-w-2xl mx-auto">
+                    Traditional resumes are static claims. CaBE Arena profiles are dynamic proof of work. 
+                    Employers don't want to read about what you *can* do. They want to see what you *have* done.
+                </p>
+</div>
+<div class="grid md:grid-cols-2 gap-8 items-stretch">
+<!-- The Old Way -->
+<div class="group relative rounded-2xl bg-[#16192b] border border-slate-800 p-8 overflow-hidden transition-opacity duration-300 hover:opacity-100 opacity-60">
+<div class="absolute top-0 left-0 w-full h-1 bg-slate-700"></div>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-slate-300">The Old Way</h3>
+<span class="material-symbols-outlined text-slate-500 text-3xl">description</span>
+</div>
+<div class="space-y-4">
+<div class="h-4 bg-slate-800 rounded w-3/4"></div>
+<div class="h-4 bg-slate-800 rounded w-1/2"></div>
+<div class="h-32 bg-slate-800/50 rounded-lg p-4 border border-dashed border-slate-700 flex flex-col items-center justify-center text-center gap-2">
+<span class="material-symbols-outlined text-slate-600 text-4xl">warning</span>
+<p class="text-slate-500 text-sm">Unverified Claims</p>
+</div>
+<p class="text-slate-500 text-sm mt-4">"Proficient in React" — Says who?</p>
+</div>
+</div>
+<!-- The Arena Way -->
+<div class="group relative rounded-2xl bg-[#1a1d2e] border border-primary/30 p-8 overflow-hidden shadow-2xl shadow-primary/5">
+<div class="absolute top-0 left-0 w-full h-1 bg-primary"></div>
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-xl font-bold text-white flex items-center gap-2">
+                            The Arena Way
+                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-primary text-white uppercase tracking-wide">Verified</span>
+</h3>
+<span class="material-symbols-outlined text-primary text-3xl">verified_user</span>
+</div>
+<!-- Visualization of verified skills -->
+<div class="space-y-4">
+<div class="flex items-center justify-between text-sm text-slate-300 mb-1">
+<span>React Architecture</span>
+<span class="text-primary font-bold">Top 2%</span>
+</div>
+<div class="w-full bg-slate-800 rounded-full h-2 mb-4">
+<div class="bg-primary h-2 rounded-full w-[98%] shadow-[0_0_10px_#2547f4]"></div>
+</div>
+<div class="flex items-center justify-between text-sm text-slate-300 mb-1">
+<span>System Design</span>
+<span class="text-green-400 font-bold">Passed</span>
+</div>
+<div class="w-full bg-slate-800 rounded-full h-2">
+<div class="bg-green-500 h-2 rounded-full w-full"></div>
+</div>
+<div class="mt-6 p-4 rounded-lg bg-primary/10 border border-primary/20 flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-1">code</span>
+<div>
+<p class="text-white text-sm font-bold">Live Code Challenges</p>
+<p class="text-slate-400 text-xs">Real-time rank progression based on actual output.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- The Climb (Rank Visualization) -->
+<section class="py-24 px-4 relative overflow-hidden">
+<!-- Background decorative line -->
+<div class="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-slate-700 to-transparent transform -translate-x-1/2 hidden md:block"></div>
+<div class="container mx-auto max-w-4xl relative z-10">
+<div class="text-center mb-16">
+<h2 class="text-3xl md:text-5xl font-black text-white mb-4">THE LADDER</h2>
+<p class="text-slate-400">Earn your place. Every rank unlocks new opportunities.</p>
+</div>
+<div class="flex flex-col gap-12">
+<!-- Bronze -->
+<div class="flex flex-col md:flex-row items-center gap-8 group">
+<div class="order-2 md:order-1 flex-1 text-center md:text-right">
+<h3 class="text-2xl font-bold text-orange-400">Bronze Tier</h3>
+<p class="text-slate-400 mt-2">Prove the basics. Complete syntax challenges and basic algorithm tests.</p>
+</div>
+<div class="order-1 md:order-2 flex-shrink-0 relative">
+<div class="w-20 h-20 rounded-xl bg-[#1a1d2e] border-2 border-orange-900 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(251,146,60,0.1)]">
+<span class="material-symbols-outlined text-4xl text-orange-500">military_tech</span>
+</div>
+</div>
+<div class="order-3 flex-1 hidden md:block"></div>
+</div>
+<!-- Silver -->
+<div class="flex flex-col md:flex-row items-center gap-8 group">
+<div class="order-3 md:order-1 flex-1 hidden md:block"></div>
+<div class="order-1 md:order-2 flex-shrink-0 relative">
+<div class="w-20 h-20 rounded-xl bg-[#1a1d2e] border-2 border-slate-600 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-[0_0_15px_rgba(148,163,184,0.1)]">
+<span class="material-symbols-outlined text-4xl text-slate-300">military_tech</span>
+</div>
+</div>
+<div class="order-2 md:order-3 flex-1 text-center md:text-left">
+<h3 class="text-2xl font-bold text-slate-300">Silver Tier</h3>
+<p class="text-slate-400 mt-2">Intermediate mastery. Build functional components and solve database queries.</p>
+</div>
+</div>
+<!-- Gold -->
+<div class="flex flex-col md:flex-row items-center gap-8 group">
+<div class="order-2 md:order-1 flex-1 text-center md:text-right">
+<h3 class="text-2xl font-bold text-yellow-400">Gold Tier</h3>
+<p class="text-slate-400 mt-2">Advanced engineering. System design, optimization, and complex integrations.</p>
+</div>
+<div class="order-1 md:order-2 flex-shrink-0 relative">
+<div class="w-20 h-20 rounded-xl bg-[#1a1d2e] border-2 border-yellow-700 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 shadow-[0_0_25px_rgba(250,204,21,0.2)]">
+<span class="material-symbols-outlined text-4xl text-yellow-400">military_tech</span>
+</div>
+</div>
+<div class="order-3 flex-1 hidden md:block"></div>
+</div>
+<!-- Platinum -->
+<div class="flex flex-col md:flex-row items-center gap-8 group">
+<div class="order-3 md:order-1 flex-1 hidden md:block"></div>
+<div class="order-1 md:order-2 flex-shrink-0 relative">
+<div class="absolute -inset-2 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full opacity-20 blur-lg group-hover:opacity-40 transition-opacity"></div>
+<div class="w-24 h-24 rounded-xl bg-[#1a1d2e] border-2 border-cyan-500 flex items-center justify-center transform group-hover:scale-110 transition-transform duration-300 relative z-10 shadow-[0_0_30px_rgba(34,211,238,0.3)]">
+<span class="material-symbols-outlined text-5xl text-cyan-400">trophy</span>
+</div>
+</div>
+<div class="order-2 md:order-3 flex-1 text-center md:text-left">
+<h3 class="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Platinum Status</h3>
+<p class="text-slate-300 mt-2 text-lg">Elite Verification. Full-stack mastery, architectural leadership. Access exclusive opportunities.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features / Testimonials Grid -->
+<section class="py-20 bg-[#0c0e1a] border-y border-[#1e2338]">
+<div class="container mx-auto px-4 max-w-6xl">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="p-6 rounded-xl bg-[#131625] border border-slate-800 hover:border-slate-700 transition-colors">
+<div class="size-12 rounded-lg bg-slate-800 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-white">visibility</span>
+</div>
+<h4 class="text-white text-lg font-bold mb-2">Total Visibility</h4>
+<p class="text-slate-400 text-sm">See exactly where you stand compared to global talent pools with real-time analytics.</p>
+</div>
+<div class="p-6 rounded-xl bg-[#131625] border border-slate-800 hover:border-slate-700 transition-colors">
+<div class="size-12 rounded-lg bg-slate-800 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-white">business_center</span>
+</div>
+<h4 class="text-white text-lg font-bold mb-2">Direct Hiring</h4>
+<p class="text-slate-400 text-sm">Companies filter by rank. Gold and Platinum members get interview offers directly.</p>
+</div>
+<div class="p-6 rounded-xl bg-[#131625] border border-slate-800 hover:border-slate-700 transition-colors">
+<div class="size-12 rounded-lg bg-slate-800 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-white">lock</span>
+</div>
+<h4 class="text-white text-lg font-bold mb-2">Cheat-Proof</h4>
+<p class="text-slate-400 text-sm">Our proctoring AI ensures that every line of code written in the Arena is yours.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-28 px-4 relative overflow-hidden">
+<div class="absolute inset-0 bg-primary/5">
+<div class="absolute inset-0 bg-[url('https://placeholder.pics/svg/40')] opacity-[0.05] bg-repeat"></div>
+</div>
+<div class="container mx-auto max-w-3xl text-center relative z-10">
+<h2 class="text-4xl md:text-6xl font-black text-white mb-8 tracking-tight">READY TO ENTER?</h2>
+<p class="text-xl text-slate-300 mb-10 max-w-xl mx-auto">
+                Join 50,000+ developers proving their worth. The climb is hard, but the view from Platinum is worth it.
+            </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<button class="h-14 px-10 bg-primary hover:bg-blue-600 text-white text-lg font-bold rounded-lg shadow-lg shadow-primary/25 transition-all transform hover:-translate-y-1">
+                    Create Free Account
+                </button>
+<button class="h-14 px-10 bg-transparent hover:bg-white/5 text-white text-lg font-medium rounded-lg border border-slate-600 transition-colors">
+                    View Demo Profile
+                </button>
+</div>
+<p class="mt-6 text-sm text-slate-500">No credit card required. Start at Bronze today.</p>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#0b0d17] border-t border-[#1e2338] pt-16 pb-8">
+<div class="container mx-auto px-4 max-w-6xl">
+<div class="flex flex-col md:flex-row justify-between gap-12 mb-12">
+<div class="max-w-xs">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-2xl">token</span>
+<span class="text-white text-xl font-bold">CaBE Arena</span>
+</div>
+<p class="text-slate-500 text-sm">
+                        The definitive skill verification platform for modern engineering teams. Rank up, get hired.
+                    </p>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-8">
+<div class="flex flex-col gap-3">
+<h5 class="text-white font-bold mb-1">Platform</h5>
+<a class="text-slate-400 hover:text-white text-sm" href="#">How it Works</a>
+<a class="text-slate-400 hover:text-white text-sm" href="#">Pricing</a>
+<a class="text-slate-400 hover:text-white text-sm" href="#">Leaderboard</a>
+</div>
+<div class="flex flex-col gap-3">
+<h5 class="text-white font-bold mb-1">Company</h5>
+<a class="text-slate-400 hover:text-white text-sm" href="#">About</a>
+<a class="text-slate-400 hover:text-white text-sm" href="#">Blog</a>
+<a class="text-slate-400 hover:text-white text-sm" href="#">Careers</a>
+</div>
+<div class="flex flex-col gap-3">
+<h5 class="text-white font-bold mb-1">Legal</h5>
+<a class="text-slate-400 hover:text-white text-sm" href="#">Privacy</a>
+<a class="text-slate-400 hover:text-white text-sm" href="#">Terms</a>
+</div>
+</div>
+</div>
+<div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-slate-600 text-sm">© 2023 CaBE Arena Inc. All rights reserved.</p>
+<div class="flex gap-4">
+<a class="text-slate-600 hover:text-white transition-colors" href="#"><span class="material-symbols-outlined text-lg">public</span></a>
+<a class="text-slate-600 hover:text-white transition-colors" href="#"><span class="material-symbols-outlined text-lg">mail</span></a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>

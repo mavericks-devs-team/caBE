@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Task Detail / Acceptance - CaBE Arena</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2547f4",
+                        "background-light": "#f5f6f8",
+                        "background-dark": "#101322",
+                        "surface-dark": "#1a1d2d",
+                        "border-dark": "#2a3256",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem", 
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem", 
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px -5px rgba(37, 71, 244, 0.5)',
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-white antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-primary selection:text-white">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-solid border-b-[#222949]/50 bg-[#101323]/95 backdrop-blur-md px-4 sm:px-10 py-3">
+<div class="mx-auto flex h-full max-w-[1280px] items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-white cursor-pointer group">
+<div class="size-8 text-primary group-hover:text-primary/80 transition-colors">
+<svg class="w-full h-full" fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">CaBE Arena</h2>
+</div>
+<nav class="hidden md:flex items-center gap-9">
+<a class="text-white text-sm font-medium leading-normal hover:text-primary transition-colors" href="#">Arena</a>
+<a class="text-[#909acb] text-sm font-medium leading-normal hover:text-white transition-colors" href="#">Leaderboard</a>
+<a class="text-[#909acb] text-sm font-medium leading-normal hover:text-white transition-colors" href="#">Profile</a>
+</nav>
+</div>
+<div class="flex items-center gap-4 sm:gap-8">
+<div class="hidden sm:flex items-center bg-[#222949] rounded-lg px-3 py-2 h-10 w-64 border border-transparent focus-within:border-primary/50 transition-colors">
+<span class="material-symbols-outlined text-[#909acb] text-[20px]">search</span>
+<input class="bg-transparent border-none text-white placeholder-[#909acb] text-sm ml-2 w-full focus:ring-0 p-0" placeholder="Search challenges..."/>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-[#222949] cursor-pointer hover:ring-primary transition-all" data-alt="User avatar with abstract pattern" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVDkXCDhsmIG8SmiBz2RIRuunARCwnf-vfONZRBNGC8V-TQRzsQ5WgyJdnrihcNbLJ2Lyg3XjkNQSutkTcj-8tbJT0OD0tJwm8ydIBwrmrhpnidSul0AroBqV4oGwZH7HTmHaMkql_wApnAaVD2w1ybupWhoqVOf17xZJUyUn3hrNxfE4plia-oT1sScUY_5BHng9qMksPz4UNxwreo-fkoSbE6n25nCAQAmbP-WI_Cj1wK0BMtBwnFM1NeEhHpJWQFQjFt_L8XjMz");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-grow w-full flex justify-center py-8 px-4 sm:px-6">
+<div class="w-full max-w-[1100px] flex flex-col gap-6">
+<!-- Breadcrumbs -->
+<div class="flex flex-wrap gap-2 items-center text-sm">
+<a class="text-[#909acb] hover:text-primary transition-colors" href="#">Challenges</a>
+<span class="text-[#555f85] material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="text-[#909acb] hover:text-primary transition-colors" href="#">Backend</a>
+<span class="text-[#555f85] material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-white font-medium">Gold Tier</span>
+</div>
+<!-- Content Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Task Details -->
+<div class="lg:col-span-8 flex flex-col gap-8">
+<!-- Header -->
+<div class="flex flex-col gap-4 border-b border-[#222949] pb-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-3 mb-2">
+<span class="bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 text-xs font-bold px-2 py-1 rounded uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">emoji_events</span>
+                                    Gold III
+                                </span>
+<span class="text-[#909acb] text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+                                    Est. 4 Hours
+                                </span>
+<span class="text-[#909acb] text-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">public</span>
+                                    Global
+                                </span>
+</div>
+<h1 class="text-4xl md:text-5xl font-black text-white leading-[1.1] tracking-tight">
+                                Refactor Legacy API Gateway
+                            </h1>
+</div>
+<!-- Tags -->
+<div class="flex flex-wrap gap-2">
+<div class="px-3 py-1.5 rounded-full bg-[#1e2338] border border-[#2a3256] text-[#cdd5f3] text-xs font-medium hover:bg-[#2a3256] transition-colors cursor-default">React</div>
+<div class="px-3 py-1.5 rounded-full bg-[#1e2338] border border-[#2a3256] text-[#cdd5f3] text-xs font-medium hover:bg-[#2a3256] transition-colors cursor-default">System Design</div>
+<div class="px-3 py-1.5 rounded-full bg-[#1e2338] border border-[#2a3256] text-[#cdd5f3] text-xs font-medium hover:bg-[#2a3256] transition-colors cursor-default">API Security</div>
+<div class="px-3 py-1.5 rounded-full bg-[#1e2338] border border-[#2a3256] text-[#cdd5f3] text-xs font-medium hover:bg-[#2a3256] transition-colors cursor-default">Idempotency</div>
+</div>
+</div>
+<!-- Mission Brief -->
+<div class="flex flex-col gap-4">
+<h3 class="text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">terminal</span>
+                            Mission Brief
+                        </h3>
+<div class="prose prose-invert max-w-none text-[#909acb] leading-relaxed">
+<p class="mb-4">
+                                The legacy payment service is currently suffering from race conditions during high-traffic events. Multiple users have reported double charges when refreshing the checkout page. 
+                            </p>
+<p class="mb-4">
+                                Your mission is to refactor the transaction endpoint <code class="bg-[#1e2338] px-1 py-0.5 rounded text-white text-sm">POST /api/v1/charge</code> using an idempotent key strategy. You must ensure that duplicate requests within a 24-hour window are gracefully handled without processing the payment twice.
+                            </p>
+<p>
+                                The system is built on Node.js and Redis. Efficiency and code cleanliness are paramount for this Gold-tier challenge.
+                            </p>
+</div>
+</div>
+<!-- Proof of Work Checklist -->
+<div class="flex flex-col gap-4 bg-[#161926] rounded-xl p-6 border border-[#222949]">
+<h3 class="text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-green-400">verified</span>
+                            Proof of Work Requirements
+                        </h3>
+<p class="text-sm text-[#909acb] mb-2">You will need to submit the following to complete this contract:</p>
+<ul class="flex flex-col gap-3">
+<li class="flex items-start gap-3 group">
+<div class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-[#3b456e] bg-[#1e2338]">
+<div class="h-2.5 w-2.5 rounded-[1px] bg-transparent"></div>
+</div>
+<span class="text-slate-300 text-sm group-hover:text-white transition-colors">Submit Source Code (GitHub Repository Link)</span>
+</li>
+<li class="flex items-start gap-3 group">
+<div class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-[#3b456e] bg-[#1e2338]">
+<div class="h-2.5 w-2.5 rounded-[1px] bg-transparent"></div>
+</div>
+<span class="text-slate-300 text-sm group-hover:text-white transition-colors">Record a Loom Video Walkthrough (&lt; 5 min) explaining your logic</span>
+</li>
+<li class="flex items-start gap-3 group">
+<div class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-[#3b456e] bg-[#1e2338]">
+<div class="h-2.5 w-2.5 rounded-[1px] bg-transparent"></div>
+</div>
+<span class="text-slate-300 text-sm group-hover:text-white transition-colors">Achieve 100% Test Coverage on the new service</span>
+</li>
+<li class="flex items-start gap-3 group">
+<div class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-[#3b456e] bg-[#1e2338]">
+<div class="h-2.5 w-2.5 rounded-[1px] bg-transparent"></div>
+</div>
+<span class="text-slate-300 text-sm group-hover:text-white transition-colors">Pass the automated load test (500 RPS)</span>
+</li>
+</ul>
+</div>
+<!-- Resources -->
+<div class="flex flex-col gap-3">
+<h3 class="text-white text-base font-bold">Resources</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<a class="flex items-center gap-3 p-3 rounded-lg bg-[#1a1d2d] border border-[#2a3256] hover:border-primary/50 hover:bg-[#202438] transition-all group" href="#">
+<div class="bg-[#252b42] p-2 rounded text-[#909acb] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">folder_zip</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white">Legacy Codebase</span>
+<span class="text-xs text-[#909acb]">ZIP • 4.2 MB</span>
+</div>
+</a>
+<a class="flex items-center gap-3 p-3 rounded-lg bg-[#1a1d2d] border border-[#2a3256] hover:border-primary/50 hover:bg-[#202438] transition-all group" href="#">
+<div class="bg-[#252b42] p-2 rounded text-[#909acb] group-hover:text-white transition-colors">
+<span class="material-symbols-outlined">description</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-medium text-white">API Documentation</span>
+<span class="text-xs text-[#909acb]">PDF • 1.1 MB</span>
+</div>
+</a>
+</div>
+</div>
+</div>
+<!-- Right Column: Sidebar (Contract/Rewards) -->
+<div class="lg:col-span-4 flex flex-col gap-6">
+<!-- Rewards Card -->
+<div class="bg-gradient-to-b from-[#1a1d2d] to-[#141620] rounded-2xl p-1 border border-[#2a3256] shadow-xl relative overflow-hidden group">
+<!-- Glow effect -->
+<div class="absolute top-0 right-0 -mr-16 -mt-16 w-32 h-32 bg-primary/20 blur-3xl rounded-full pointer-events-none"></div>
+<div class="bg-[#161926] rounded-xl p-5 flex flex-col items-center text-center h-full relative z-10">
+<h4 class="text-[#909acb] text-xs font-bold uppercase tracking-widest mb-4">Completion Rewards</h4>
+<div class="mb-4 relative">
+<!-- Hexagon-ish badge placeholder -->
+<div class="w-20 h-20 bg-gradient-to-br from-yellow-600 to-yellow-800 rounded-xl rotate-45 flex items-center justify-center shadow-lg border-2 border-yellow-400/30">
+<div class="-rotate-45">
+<span class="material-symbols-outlined text-white text-[32px]">security_update_good</span>
+</div>
+</div>
+<div class="absolute -bottom-2 -right-2 bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#161926]">
+                                    NEW
+                                </div>
+</div>
+<h3 class="text-white font-bold text-lg mb-1">Refactor Rogue</h3>
+<p class="text-[#909acb] text-xs mb-6">Badge unlocked upon successful merge.</p>
+<div class="w-full h-px bg-[#2a3256] mb-4"></div>
+<div class="flex items-center justify-center gap-1 mb-1">
+<span class="text-3xl font-black text-primary">+350</span>
+<span class="text-sm font-medium text-slate-400 mt-2">Rank Points</span>
+</div>
+<div class="text-xs text-green-500 font-medium">
+                                +15 Elo Rating
+                            </div>
+</div>
+</div>
+<!-- Commitment Card -->
+<div class="bg-[#1a1d2d] rounded-2xl border border-[#2a3256] p-6 shadow-lg flex flex-col gap-4 sticky top-24">
+<div class="flex justify-between items-center pb-4 border-b border-[#2a3256]">
+<span class="text-white font-medium text-sm">Deadline</span>
+<span class="text-[#909acb] text-sm">48h from acceptance</span>
+</div>
+<div class="flex gap-3">
+<div class="bg-[#252b42] rounded-full p-2 h-10 w-10 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[#909acb] text-[20px]">group</span>
+</div>
+<div class="text-xs text-[#909acb] leading-tight">
+<p class="mb-1"><strong class="text-white">Peer Review Required.</strong></p>
+<p>Your submission will be reviewed by 2 Gold+ engineers before points are awarded.</p>
+</div>
+</div>
+<div class="mt-2">
+<button class="w-full group relative flex items-center justify-center gap-2 bg-primary hover:bg-blue-600 text-white font-bold py-4 px-6 rounded-xl transition-all shadow-glow hover:shadow-[0_0_30px_-5px_rgba(37,71,244,0.6)] hover:-translate-y-0.5 active:translate-y-0 active:shadow-none overflow-hidden">
+<!-- Button animated background scan -->
+<div class="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
+<span class="relative z-10 text-lg tracking-tight">ACCEPT CHALLENGE</span>
+<span class="material-symbols-outlined relative z-10 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<div class="text-center mt-3">
+<a class="text-xs text-[#555f85] hover:text-[#909acb] transition-colors font-medium" href="#">Decline and return to lobby</a>
+</div>
+</div>
+<div class="flex items-center justify-center gap-1.5 mt-2 opacity-60">
+<span class="material-symbols-outlined text-[14px] text-[#909acb]">verified_user</span>
+<span class="text-[10px] text-[#909acb] font-mono">VERIFIABLE ON-CHAIN</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Tailwind Custom Animation -->
+<style>
+        @keyframes shimmer {
+            100% {
+                transform: translateX(100%);
+            }
+        }
+    </style>
+</body></html>
