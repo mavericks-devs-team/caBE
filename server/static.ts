@@ -5,21 +5,17 @@ import path from "path";
 export function serveStatic(app: Express) {
   const distPath = path.resolve("client/dist");
 
-  // If the frontend hasn't been built, DON'T crash the server
   if (!fs.existsSync(distPath)) {
-    console.warn(
-      `⚠️ Skipping static serve — build folder not found at: ${distPath}`
-    );
+    console.warn("⚠️ No client build found, skipping static serve:", distPath);
     return;
   }
 
-  console.log(`📦 Serving frontend from: ${distPath}`);
+  console.log("📦 Serving frontend from:", distPath);
 
   app.use(express.static(distPath));
 
-  // Fallback: always return index.html for SPA routes
-  app.use("*", (_req, res) => {
-    res.sendFile(path.resolve(distPath, "index.html"));
+  // SPA fallback → send index.html for all routes
+  app.get("*", (_req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
   });
 }
-
