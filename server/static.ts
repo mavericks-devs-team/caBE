@@ -5,6 +5,8 @@ import path from "path";
 export function serveStatic(app: Express) {
   const distPath = path.resolve("client/dist");
 
+  console.log("🔎 Static middleware attempting to serve:", distPath);
+
   if (!fs.existsSync(distPath)) {
     console.warn("⚠️ No client build found:", distPath);
     return;
@@ -18,4 +20,3 @@ export function serveStatic(app: Express) {
     res.sendFile(path.join(distPath, "index.html"));
   });
 }
-
