@@ -1,28 +1,41 @@
 import express from "express";
 import cors from "cors";
-import { createServer } from "http";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// 👇 IMPORTANT — include .js extension for ESM runtime
-import { registerRoutes } from "./routes.js";
-import { serveStatic } from "./static.js";
+import { registerApiRoutes } from "./routes.js";
 
 const app = express();
-const httpServer = createServer(app);
 
+// ---------- Middleware ----------
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
 
-(async () => {
-  await registerRoutes(app);   // takes only app
+// ---------- API Routes ----------
+registerApiRoutes(app);
 
-  if (process.env.NODE_ENV === "production") {
-    serveStatic(app);
-  }
+// ---------- Static Frontend Serving ----------
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-  const port = Number(process.env.PORT || 5000);
+// Path: dist/client/dist  (after build)
+const clientBuildPath = path.join(__dirname, "..", "client", "dist");
 
-  httpServer.listen(port, "0.0.0.0", () => {
-    console.log(`🚀 Server running on 0.0.0.0:${port}`);
-  });
-})();
+console.log("🔎 Static middleware attempting to serve:", clientBuildPath);
+
+// Serve static files
+app.use(express.static(clientBuildPath));
+
+// SPA fallback for React Router
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(clientBuildPath, "index.html"));
+});
+
+// ---------- Server Startup ----------
+const PORT = Number(process.env.PORT) || 10000;
+const HOST = "0.0.0.0";
+
+app.listen(PORT, HOST, () => {
+  console.log(`🚀 Server running on ${HOST}:${PORT}`);
+  console.log("🌍 Environment:", process.env.NODE_ENV || "development");
+});
