@@ -1,36 +1,25 @@
 import { Express } from "express";
-import { Server } from "http";
 import { MOCK_TASKS } from "./mockData.js";
+import { getAllTasks, getTaskById, createTask } from "./storage.js";
 
-export async function registerRoutes(_http: Server, app: Express) {
-  console.log("🔧 Registering API routes…");
+export function registerRoutes(app: Express) {
 
-  // Health check
   app.get("/api/health", (_req, res) => {
-    res.json({ ok: true, service: "caBE backend" });
+    res.json({ ok: true });
   });
 
-  // Get all tasks (mock only — safe + deterministic)
   app.get("/api/tasks", (_req, res) => {
-    res.json({
-      ok: true,
-      data: MOCK_TASKS
-    });
+    res.json(getAllTasks() ?? MOCK_TASKS);
   });
 
-  // Get task by ID
   app.get("/api/tasks/:id", (req, res) => {
-    const task = MOCK_TASKS.find(t => String(t.id) === req.params.id);
-
-    if (!task) {
-      return res.status(404).json({
-        ok: false,
-        message: "Task not found"
-      });
-    }
-
-    res.json({ ok: true, data: task });
+    const task = getTaskById(req.params.id);
+    if (!task) return res.status(404).json({ error: "Not found" });
+    res.json(task);
   });
 
-  console.log("✅ API routes ready");
+  app.post("/api/tasks", (req, res) => {
+    const task = createTask(req.body);
+    res.json(task);
+  });
 }
