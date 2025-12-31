@@ -2,8 +2,8 @@
   "include": ["server/**/*", "shared/**/*"],
   "exclude": ["node_modules", "client", "dist", "build"],
   "compilerOptions": {
-    "rootDir": ".",
-    "outDir": "./dist",
+    "rootDir": "server",
+    "outDir": "dist/server",
 
     "noEmit": false,
     "strict": true,
