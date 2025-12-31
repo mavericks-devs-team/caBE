@@ -2,6 +2,15 @@ import express, { Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { serveStatic } from "./static";
 import { createServer } from "http";
+import fs from "fs";
+import path from "path";
+
+const distServerPath = path.resolve("dist/server");
+if (fs.existsSync(distServerPath)) {
+  console.log("📂 DIST SERVER CONTENTS:", fs.readdirSync(distServerPath));
+} else {
+  console.log("⚠️ dist/server does NOT exist");
+}
 
 const app = express();
 const httpServer = createServer(app);
