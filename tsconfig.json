@@ -2,8 +2,8 @@
   "include": ["server/**/*", "shared/**/*"],
   "exclude": ["node_modules", "client", "dist", "build"],
   "compilerOptions": {
-    "rootDir": "server",
-    "outDir": "dist/server",
+    "rootDir": ".",
+    "outDir": "dist",
 
     "noEmit": false,
     "strict": true,
@@ -15,7 +15,6 @@
 
     "esModuleInterop": true,
     "skipLibCheck": true,
-
     "allowImportingTsExtensions": false,
 
     "baseUrl": ".",
