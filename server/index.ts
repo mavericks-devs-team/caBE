@@ -3,7 +3,7 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 
-import { registerApiRoutes } from "./routes.js";
+import { registerRoutes } from "./routes.js";
 
 const app = express();
 
@@ -12,21 +12,20 @@ app.use(cors());
 app.use(express.json());
 
 // ---------- API Routes ----------
-registerApiRoutes(app);
+registerRoutes(app);
 
 // ---------- Static Frontend Serving ----------
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Path: dist/client/dist  (after build)
+// client/dist after Vite build
 const clientBuildPath = path.join(__dirname, "..", "client", "dist");
 
-console.log("🔎 Static middleware attempting to serve:", clientBuildPath);
+console.log("🔎 Static middleware serving:", clientBuildPath);
 
-// Serve static files
 app.use(express.static(clientBuildPath));
 
-// SPA fallback for React Router
+// React Router fallback
 app.get("*", (_req, res) => {
   res.sendFile(path.join(clientBuildPath, "index.html"));
 });
@@ -37,5 +36,4 @@ const HOST = "0.0.0.0";
 
 app.listen(PORT, HOST, () => {
   console.log(`🚀 Server running on ${HOST}:${PORT}`);
-  console.log("🌍 Environment:", process.env.NODE_ENV || "development");
 });
