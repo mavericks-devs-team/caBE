@@ -1,49 +1,33 @@
-import { Express, Request, Response } from "express";
+import { Express } from "express";
+import { storage } from "./storage.js";
 
-// 👇 IMPORTANT — include `.js` extensions for ESM runtime after build
-import { MOCK_TASKS } from "./mockData.js";
-import {
-  getAllTasks,
-  getTaskById,
-  createTask,
-} from "./storage.js";
-
-export async function registerRoutes(app: Express) {
-  app.get("/api/health", (_req: Request, res: Response) => {
+export function registerRoutes(app: Express) {
+  // Health check
+  app.get("/api/health", (_req, res) => {
     res.json({
       ok: true,
       service: "caBE Arena API",
-      env: process.env.NODE_ENV || "development",
+      env: process.env.NODE_ENV || "development"
     });
   });
 
-  // ===== TASK ROUTES =====
-
-  // Get all tasks
-  app.get("/api/tasks", async (_req: Request, res: Response) => {
-    const tasks = await getAllTasks();
-    res.json(tasks ?? MOCK_TASKS);
+  // ---- Tasks ----
+  app.get("/api/tasks", async (_req, res) => {
+    const tasks = await storage.getTasks();
+    res.json(tasks);
   });
 
-  // Get task by id
-  app.get("/api/tasks/:id", async (req: Request, res: Response) => {
-    const task = await getTaskById(req.params.id);
-
-    if (!task) {
-      return res.status(404).json({ message: "Task not found" });
-    }
-
+  app.get("/api/tasks/:id", async (req, res) => {
+    const task = await storage.getTask(req.params.id);
+    if (!task) return res.status(404).json({ error: "Task not found" });
     res.json(task);
   });
 
-  // Create task
-  app.post("/api/tasks", async (req: Request, res: Response) => {
-    const task = await createTask(req.body);
-    res.status(201).json(task);
+  // ---- Submissions ----
+  app.post("/api/submissions", async (req, res) => {
+    const result = await storage.createSubmission(req.body);
+    res.json(result);
   });
 
-  // ===== FALLBACK API 404 =====
-  app.all("/api/*", (_req: Request, res: Response) => {
-    res.status(404).json({ message: "API route not found" });
-  });
+  console.log("🔧 API routes registered");
 }
