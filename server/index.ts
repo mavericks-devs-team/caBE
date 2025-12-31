@@ -70,6 +70,7 @@ app.use((req, res, next) => {
     throw err;
   });
 
+  // ---- Production serves built frontend ----
   if (process.env.NODE_ENV === "production") {
     serveStatic(app);
   } else {
@@ -77,23 +78,10 @@ app.use((req, res, next) => {
     await setupVite(httpServer, app);
   }
 
-  // --------- 🔹 NEW MVP LANDING ROUTE 🔹 ---------
-  // Shows a simple success page instead of "Cannot GET /"
-   // ----- MVP LANDING ROUTE -----
-  app.get("/", (_req, res) => {
-    const env = process.env.NODE_ENV || "development";
-    res.send(
-      "<h2>🚀 caBE Arena Backend is LIVE</h2>" +
-      "<p>Deployment successful. API is running.</p>" +
-      "<p>Environment: <b>" + env + "</b></p>"
-    );
-  });
-
-  // ----- RENDER REQUIREMENT -----
+  // ---- Render requirement: bind to 0.0.0.0 + PORT ----
   const port = parseInt(process.env.PORT || "5000", 10);
 
   httpServer.listen(port, "0.0.0.0", () => {
     log("🚀 Server running on 0.0.0.0:" + port);
   });
 })();
-
