@@ -1,83 +1,82 @@
-import { db } from "./db";
-import {
-  users, tasks, submissions,
-  type User, type UpsertUser,
-  type Task, type InsertTask,
-  type Submission, type InsertSubmission,
-  RANKS
-} from "@shared/schema";
-import { eq, desc } from "drizzle-orm";
+import { db } from './firebase-admin';
+import { RANKS, type Task, type InsertTask, type Submission, type InsertSubmission } from '@shared/models';
+import { MOCK_TASKS, MOCK_USERS, MOCK_LEADERBOARD } from './mockData';
 
-export interface IStorage {
-  // Users
-  getUser(id: string): Promise<User | undefined>;
-  getUserByUsername(username: string): Promise<User | undefined>;
-  // createUser(user: InsertUser): Promise<User>; // Handled by authStorage mostly, but useful
-  updateUserPoints(id: string, points: number, rank: string): Promise<User>;
+export interface FirebaseStorage {
+    // Tasks
+    getTasks(): Promise<Task[]>;
+    getTask(id: string): Promise<Task | null>;
+    createTask(task: InsertTask): Promise<Task>;
 
-  // Tasks
-  getTasks(): Promise<Task[]>;
-  getTask(id: number): Promise<Task | undefined>;
-  createTask(task: InsertTask): Promise<Task>;
+    // Submissions
+    createSubmission(submission: any): Promise<Submission>;
+    getUserSubmissions(userId: string): Promise<any[]>;
+    getUser(id: string): Promise<any>;
+    updateUser(id: string, updates: any): Promise<void>;
+    processSubmissionResult(userId: string, taskId: string, score: number, taskPoints: number): Promise<{ rankUp: boolean, newRank: string, earnedPoints: number }>;
 
-  // Submissions
-  createSubmission(submission: typeof submissions.$inferInsert): Promise<Submission>;
-  getUserSubmissions(userId: string): Promise<(Submission & { task: Task | null })[]>;
+    // Read-Only Feeds
+    getRecentSubmissions(userId: string, limit: number): Promise<any[]>;
+    getLeaderboard(limit: number, afterPoints?: number): Promise<any[]>;
 }
 
-export class DatabaseStorage implements IStorage {
-  async getUser(id: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
-    return user;
-  }
+class FirestoreStorage implements FirebaseStorage {
+    async getTasks(): Promise<Task[]> {
+        console.log("⚠️ Using MOCK TASKS (Credentials missing or forced)");
+        return MOCK_TASKS;
+    }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.username, username));
-    return user;
-  }
+    async getTask(id: string): Promise<Task | null> {
+        return MOCK_TASKS.find(t => t.id === id) || null;
+    }
 
-  // async createUser(insertUser: InsertUser): Promise<User> {
-  //   const [user] = await db.insert(users).values(insertUser).returning();
-  //   return user;
-  // }
+    async createTask(task: InsertTask): Promise<Task> {
+        const newTask = { ...task, id: `mock-${Date.now()}`, createdAt: new Date() } as Task;
+        MOCK_TASKS.push(newTask);
+        return newTask;
+    }
 
-  async updateUserPoints(id: string, points: number, rank: string): Promise<User> {
-    const [user] = await db.update(users)
-      .set({ points, rank })
-      .where(eq(users.id, id))
-      .returning();
-    return user;
-  }
+    async createSubmission(submission: any): Promise<Submission> {
+        console.log("⚠️ Using MOCK SUBMISSION");
+        return {
+            id: `mock-submission-${Date.now()}`,
+            ...submission,
+            createdAt: new Date()
+        } as Submission;
+    }
 
-  async getTasks(): Promise<Task[]> {
-    return await db.select().from(tasks).orderBy(desc(tasks.createdAt));
-  }
+    async getUserSubmissions(userId: string): Promise<any[]> {
+        return []; // Return empty or mock list
+    }
 
-  async getTask(id: number): Promise<Task | undefined> {
-    const [task] = await db.select().from(tasks).where(eq(tasks.id, id));
-    return task;
-  }
+    async getSubmissionCount(userId: string): Promise<number> {
+        return 0;
+    }
 
-  async createTask(task: InsertTask): Promise<Task> {
-    const [newTask] = await db.insert(tasks).values(task).returning();
-    return newTask;
-  }
+    async getActiveSubmission(userId: string): Promise<any | null> {
+        return null;
+    }
 
-  async createSubmission(submission: typeof submissions.$inferInsert): Promise<Submission> {
-    const [newSubmission] = await db.insert(submissions).values(submission).returning();
-    return newSubmission;
-  }
+    async getUser(id: string): Promise<any> {
+        return { ...MOCK_USERS['default'], id };
+    }
 
-  async getUserSubmissions(userId: string): Promise<(Submission & { task: Task | null })[]> {
-    const results = await db.query.submissions.findMany({
-      where: eq(submissions.userId, userId),
-      with: {
-        task: true
-      },
-      orderBy: desc(submissions.createdAt)
-    });
-    return results;
-  }
+    async updateUser(id: string, updates: any): Promise<void> {
+        console.log(`Mock Update User ${id}:`, updates);
+    }
+
+    async processSubmissionResult(userId: string, taskId: string, score: number, taskPoints: number): Promise<{ rankUp: boolean, newRank: string, earnedPoints: number }> {
+        const simulatedPoints = Math.floor(taskPoints * (score / 100));
+        return { rankUp: false, newRank: "Bronze", earnedPoints: simulatedPoints };
+    }
+
+    async getRecentSubmissions(userId: string, limit: number): Promise<any[]> {
+        return [];
+    }
+
+    async getLeaderboard(limit: number, afterPoints?: number): Promise<any[]> {
+        return MOCK_LEADERBOARD;
+    }
 }
 
-export const storage = new DatabaseStorage();
+export const storage = new FirestoreStorage();

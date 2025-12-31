@@ -13,6 +13,7 @@ import Auth from "@/pages/Auth";
 import Arena from "@/pages/Arena";
 import TaskDetails from "@/pages/TaskDetails";
 import Dashboard from "@/pages/Dashboard";
+import Leaderboard from "@/pages/Leaderboard";
 import Admin from "@/pages/Admin";
 
 function Router() {
@@ -23,6 +24,8 @@ function Router() {
       <Route path="/arena" component={Arena} />
       <Route path="/task/:id" component={TaskDetails} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/leaderboard" component={Leaderboard} />
       <Route path="/admin" component={Admin} />
       <Route component={NotFound} />
     </Switch>

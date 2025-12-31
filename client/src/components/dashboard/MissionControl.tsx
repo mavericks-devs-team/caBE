@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Crosshair, Loader2 } from "lucide-react";
 import { Link } from "wouter";
-import { Task } from "@shared/schema";
+import { Task } from "@shared/models";
 
 interface MissionControlProps {
     activeTask?: Task;
@@ -44,8 +44,8 @@ export function MissionControl({ activeTask, recommendedTask, loading }: Mission
                     <div>
                         <div className="flex items-center gap-3 mb-3">
                             <span className={`px-3 py-1 rounded-full text-xs font-mono font-bold uppercase tracking-wider ${isResuming
-                                    ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
-                                    : "bg-primary/20 text-primary border border-primary/30"
+                                ? "bg-yellow-500/20 text-yellow-400 border border-yellow-500/30"
+                                : "bg-primary/20 text-primary border border-primary/30"
                                 }`}>
                                 {isResuming ? "IN PROGRESS" : "NEXT OBJECTIVE"}
                             </span>

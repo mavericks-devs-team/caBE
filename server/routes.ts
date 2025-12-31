@@ -1,20 +1,14 @@
 import type { Express } from "express";
 import type { Server } from "http";
-import { firebaseStorage } from "./firebase-storage";
+import { storage } from "./storage";
 import { auth as firebaseAuth } from "./firebase-admin";
 import { api } from "@shared/routes";
 import { z } from "zod";
-import { RANKS } from "@shared/schema";
+import { RANKS } from "@shared/models";
+import { AIScoringService } from "./services/aiScorer";
 
-// Simple mock for AI scoring
-async function scoreSubmission(taskDescription: string, proof: string): Promise<{ score: number, feedback: string }> {
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  const score = Math.floor(Math.random() * 30) + 70; // 70-100 random score
-  return {
-    score,
-    feedback: "Automated analysis: Good effort! The submission meets the core requirements. Keep building!"
-  };
-}
+// [DELETED] mock scoreSubmission function
+
 
 // Middleware to verify Firebase ID token
 async function verifyFirebaseToken(req: any, res: any, next: any) {
@@ -46,11 +40,11 @@ export async function registerRoutes(
   // Seed some sample tasks on startup
   async function seedTasks() {
     try {
-      const tasks = await firebaseStorage.getTasks();
+      const tasks = await storage.getTasks();
       if (tasks.length === 0) {
         console.log("📝 Seeding sample tasks...");
 
-        await firebaseStorage.createTask({
+        await storage.createTask({
           title: "Build a Simple Image Classifier",
           description: "Create a neural network using TensorFlow/PyTorch to classify images from the CIFAR-10 dataset.",
           category: "AI/ML",
@@ -60,7 +54,7 @@ export async function registerRoutes(
           tags: ["neural-networks", "computer-vision"]
         });
 
-        await firebaseStorage.createTask({
+        await storage.createTask({
           title: "Deploy a Containerized Microservice",
           description: "Dockerize a simple Node.js app and deploy it to a Kubernetes cluster (or simulated env).",
           category: "Cloud/DevOps",
@@ -70,7 +64,7 @@ export async function registerRoutes(
           tags: ["kubernetes", "docker", "devops"]
         });
 
-        await firebaseStorage.createTask({
+        await storage.createTask({
           title: "Analyze Sales Data",
           description: "Clean and analyze a provided CSV dataset of sales records. Produce 3 key insights.",
           category: "Data Science",
@@ -95,7 +89,7 @@ export async function registerRoutes(
   // Get all tasks (public)
   app.get(api.tasks.list.path, async (req, res) => {
     try {
-      const tasks = await firebaseStorage.getTasks();
+      const tasks = await storage.getTasks();
       res.json(tasks);
     } catch (error: any) {
       console.error("Error fetching tasks:", error);
@@ -106,7 +100,7 @@ export async function registerRoutes(
   // Get single task (public)
   app.get(api.tasks.get.path, async (req, res) => {
     try {
-      const task = await firebaseStorage.getTask(req.params.id);
+      const task = await storage.getTask(req.params.id);
       if (!task) return res.status(404).json({ message: "Task not found" });
       res.json(task);
     } catch (error: any) {
@@ -121,28 +115,79 @@ export async function registerRoutes(
       const userId = (req as any).user.uid;
       const input = api.submissions.create.input.parse(req.body);
 
-      const task = await firebaseStorage.getTask(input.taskId.toString());
+      const task = await storage.getTask(input.taskId.toString());
       if (!task) return res.status(404).json({ message: "Task not found" });
 
-      // AI SCORING
-      const { score, feedback } = await scoreSubmission(task.description, input.proofContent);
+      // AI SCORING (Real Implementation)
+      console.log(`🧠 Evaluating submission for task "${task.title}"...`);
+      const aiResult = await AIScoringService.evaluateSubmission(task, {
+        proofContent: input.proofContent,
+        language: "auto-detect" // or map from user input if available
+      });
 
-      // Save submission to Firestore
-      const submission = await firebaseStorage.createSubmission({
+      // Construct a unified feedback string for now (since shared model expects string)
+      // Ideally, we'd update shared/models.ts to support structured feedback, but sticking to contract constraints for now.
+      const feedbackString = `
+**Total Score: ${aiResult.totalScore}/100** ${aiResult.passed ? "✅" : "❌"}
+
+**Strengths:**
+${aiResult.feedback.strengths.map(s => `- ${s}`).join("\n")}
+
+**Weaknesses:**
+${aiResult.feedback.weaknesses.map(w => `- ${w}`).join("\n")}
+
+**Dimension Scores:**
+- Correctness: ${(aiResult.dimensions.correctness.score * 100).toFixed(0)}%
+- Efficiency: ${(aiResult.dimensions.efficiency.score * 100).toFixed(0)}%
+- Quality: ${(aiResult.dimensions.quality.score * 100).toFixed(0)}%
+- Compliance: ${(aiResult.dimensions.compliance.score * 100).toFixed(0)}%
+`.trim();
+
+      // Save submission evaluation first (we want this record regardless)
+      const submission = await storage.createSubmission({
         userId,
         taskId: input.taskId.toString(),
         proofContent: input.proofContent,
-        status: "approved",
-        score,
-        feedback
+        status: aiResult.passed ? "approved" : "rejected",
+        score: aiResult.totalScore,
+        feedback: feedbackString
       });
 
-      // TODO: Update user points in Firestore (implement later)
-      // For now, just return the submission
+      // Atomic Progression Update (Points + Rank)
+      // Only if passed, naturally.
+      let rankUp = false;
+      let newRank = "Bronze";
+      let earnedPoints = 0;
+
+      if (aiResult.passed) {
+        try {
+          const result = await storage.processSubmissionResult(
+            userId,
+            input.taskId.toString(),
+            aiResult.totalScore,
+            task.points
+          );
+          rankUp = result.rankUp;
+          newRank = result.newRank;
+          earnedPoints = result.earnedPoints;
+
+          if (earnedPoints > 0) {
+            console.log(`🎉 User ${userId} earned ${earnedPoints} points. Total Rank: ${newRank}`);
+          } else {
+            console.log(`User ${userId} passed but earned 0 points (already achieved max score or similar).`);
+          }
+
+        } catch (e) {
+          console.error("Failed to process progression:", e);
+          // We don't fail the response, but log the error.
+          // In production, we might want a queue or retry.
+        }
+      }
+
       res.status(201).json({
         ...submission,
-        rankUp: false,
-        newRank: "Bronze"
+        rankUp,
+        newRank
       });
 
     } catch (err) {
@@ -154,11 +199,106 @@ export async function registerRoutes(
     }
   });
 
+  // --- READ-ONLY API FOR FRONTEND ---
+
+  // Get User Progress Details
+  app.get("/api/users/:id/progress", async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const user = await storage.getUser(userId);
+
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+
+      const currentPoints = user.points || 0;
+      const currentRankName = user.rank || "Bronze";
+
+      // Determine Next Rank
+      // Iterate ranks, find first one with threshold > currentPoints
+      // Or strictly next tier.
+      // Assumption: RANKS is roughly ordered or we sort it.
+      // Models.ts: Bronze:0, Silver:1000, Gold:5000, Plat:10000
+
+      const sortedRanks = Object.values(RANKS).sort((a, b) => a.threshold - b.threshold);
+      let nextRank = null;
+
+      for (const r of sortedRanks) {
+        if (r.threshold > currentPoints) {
+          nextRank = {
+            name: r.name,
+            threshold: r.threshold,
+            pointsRequired: r.threshold - currentPoints
+          };
+          break;
+        }
+      }
+
+      // Fetch recent history (limit 5)
+      // Fetch recent history (limit 5)
+      const recentSubmissions = await storage.getRecentSubmissions(userId, 5);
+
+      // Fetch active/pending submission for the dashboard mission control
+      const activeSubmission = await storage.getActiveSubmission(userId);
+
+      // Fetch total submission count for stats
+      const totalSubmissions = await storage.getSubmissionCount(userId);
+
+      res.json({
+        totalPoints: currentPoints,
+        currentRank: currentRankName,
+        nextRank,
+        recentSubmissions,
+        activeSubmission,
+        totalSubmissions
+      });
+
+    } catch (err) {
+      console.error("Error fetching progress:", err);
+      res.status(500).json({ message: "Failed to fetch progress" });
+    }
+  });
+
+  // Get Leaderboard
+  app.get("/api/leaderboard", async (req, res) => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 20;
+      const cursor = req.query.cursor ? parseInt(req.query.cursor as string) : undefined;
+
+      // Safety cap on limit
+      const safeLimit = Math.min(limit, 100);
+
+      const entries = await storage.getLeaderboard(safeLimit, cursor);
+
+      // Determine next cursor (points of last entry)
+      // Note: Simple cursor on points only works if points are unique or we don't mind overlapping/skipping.
+      // Ideally cursor is a composite token, but for this constraint "cursor" in query, we used points.
+      // If strictly points, we might miss users with same points.
+      // Production robust cursor usually encodes last document snapshot path.
+      // Given constraint "endpoints are cheap", we will stick to points for now or 
+      // just return the last points as 'nextCursor' suggestion.
+
+      let nextCursor = null;
+      if (entries.length > 0) {
+        nextCursor = entries[entries.length - 1].points;
+      }
+
+      res.json({
+        entries,
+        nextCursor // Client sends this as ?cursor=...
+      });
+
+    } catch (err) {
+      console.error("Error fetching leaderboard:", err);
+      res.status(500).json({ message: "Failed to fetch leaderboard" });
+    }
+  });
+
   // Get user submissions (requires auth)
   app.get(api.submissions.list.path, verifyFirebaseToken, async (req, res) => {
     try {
       const userId = (req as any).user.uid;
-      const submissions = await firebaseStorage.getUserSubmissions(userId);
+      const submissions = await storage.getUserSubmissions(userId);
       res.json(submissions);
     } catch (error: any) {
       console.error("Error fetching submissions:", error);

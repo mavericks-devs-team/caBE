@@ -7,6 +7,7 @@ import { getAnalytics, isSupported } from "firebase/analytics";
 const firebaseConfig = {
     apiKey: "AIzaSyCXlUTPJhNjLCqzjUfOJP5TJOBUjxABCNA",
     authDomain: "cabe-d66bb.firebaseapp.com",
+    databaseURL: "https://cabe-d66bb-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "cabe-d66bb",
     storageBucket: "cabe-d66bb.firebasestorage.app",
     messagingSenderId: "954887825964",
@@ -24,6 +25,6 @@ export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
 
 // Analytics (only on client side and if supported)
-export const analytics = typeof window !== 'undefined' ? isSupported().then(yes => yes ? getAnalytics(app) : null) : null;
+export const analytics = typeof window !== 'undefined' ? isSupported().then((yes: boolean) => yes ? getAnalytics(app) : null) : null;
 
 export default app;

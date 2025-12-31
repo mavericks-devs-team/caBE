@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Progress } from "@/components/ui/progress";
 import { getTaskEquivalent } from "@/lib/progression";
-import { RANKS } from "@shared/schema";
+import { RANKS } from "@shared/models";
 import { Lock, Shield, Zap, Award } from "lucide-react";
 
 interface RankBannerProps {

@@ -10,7 +10,8 @@ import {
 } from "lucide-react";
 import { Link } from "wouter";
 import { ProcessingOverlay } from "@/components/task/ProcessingOverlay";
-import { ScoreBreakdown } from "@/components/task/ScoreBreakdown";
+import { FeedbackPanel, FeedbackData } from "@/components/task/FeedbackPanel";
+import { useToast } from "@/hooks/use-toast";
 
 type SubmissionState = "IDLE" | "PROCESSING" | "SCORE_REVEAL";
 
@@ -20,11 +21,12 @@ export default function TaskDetails() {
   const [location, setLocation] = useLocation();
   const { user } = useAuth();
   const { data: task, isLoading } = useTask(taskId);
+  const { toast } = useToast();
 
   const [proof, setProof] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [submissionState, setSubmissionState] = useState<SubmissionState>("IDLE");
-  const [earnedScore, setEarnedScore] = useState<{ total: number; breakdown: any } | null>(null);
+  const [feedbackData, setFeedbackData] = useState<FeedbackData | null>(null);
 
   const createSubmission = useCreateSubmission();
 
@@ -35,52 +37,51 @@ export default function TaskDetails() {
       return;
     }
 
-    // 1. Start Friction Phase
     setSubmissionState("PROCESSING");
 
     try {
-      // 2. Parallel Execution: API Call + Min Wait Time
-      const minWait = new Promise(resolve => setTimeout(resolve, 3500)); // 3.5s friction
+      // Parallel Execution: API Call + Min Wait Time for effect
+      const minWait = new Promise(resolve => setTimeout(resolve, 3000));
       const submissionPromise = createSubmission.mutateAsync({
         userId: user.uid,
-        taskId,
+        taskId: String(taskId),
         proofContent: proof,
       });
 
       const [_, result] = await Promise.all([minWait, submissionPromise]);
 
-      // 3. Prepare Score Data (Mock breakdown for now if not in API)
-      setEarnedScore({
-        total: result.score || task?.points || 0,
-        breakdown: {
-          base: (task?.points || 0),
-          time: 0, // Future: Calc based on est. time
-          quality: 0 // Future: Linter bonus
-        }
+      setFeedbackData({
+        ...result,
+        rankUp: result.rankUp,
+        newRank: result.newRank
       });
 
-      // 4. Reveal Score
       setSubmissionState("SCORE_REVEAL");
 
-    } catch (error) {
+      if (result.rankUp) {
+        confetti({
+          particleCount: 200,
+          spread: 90,
+          origin: { y: 0.6 },
+          colors: ['#FFD700', '#F472B6', '#22D3EE']
+        });
+      }
+
+    } catch (error: any) {
       console.error(error);
       setSubmissionState("IDLE");
-      // TODO: Show error toast
+      toast({
+        title: "Submission Failed",
+        description: error.message || "Something went wrong. Please try again.",
+        variant: "destructive"
+      });
     }
   };
 
   const handleClaim = () => {
     setIsDialogOpen(false);
     setSubmissionState("IDLE");
-    setProof("");
-
-    // Fire Confetti
-    confetti({
-      particleCount: 150,
-      spread: 80,
-      origin: { y: 0.6 },
-      colors: ['#7C3AED', '#22D3EE', '#FFFFFF']
-    });
+    setProof(""); // Reset form
   };
 
   if (isLoading) {
@@ -219,22 +220,27 @@ export default function TaskDetails() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-lg bg-card border border-border rounded-2xl shadow-2xl p-6 md:p-8 overflow-hidden"
+              className="relative w-full max-w-lg bg-card border border-border rounded-2xl shadow-2xl md:p-2 overflow-hidden"
+              style={{ maxHeight: '90vh' }}
             >
+
+              {/* Dynamic Content Switching */}
 
               {/* STATE: PROCESSING */}
               {submissionState === "PROCESSING" && (
-                <ProcessingOverlay />
+                <div className="p-8">
+                  <ProcessingOverlay />
+                </div>
               )}
 
               {/* STATE: SCORE REVEAL */}
-              {submissionState === "SCORE_REVEAL" && earnedScore && (
-                <ScoreBreakdown score={earnedScore} onClaim={handleClaim} />
+              {submissionState === "SCORE_REVEAL" && feedbackData && (
+                <FeedbackPanel data={feedbackData} onClose={handleClaim} />
               )}
 
               {/* STATE: IDLE (FORM) */}
               {submissionState === "IDLE" && (
-                <>
+                <div className="p-8">
                   <h3 className="text-2xl font-display font-bold text-white mb-2">Submit Your Work</h3>
                   <p className="text-muted-foreground mb-6">
                     Paste the URL to your solution (GitHub, Replit, Figma, etc.)
@@ -270,11 +276,11 @@ export default function TaskDetails() {
                         className="px-6 py-2.5 rounded-xl bg-primary text-white font-bold hover:bg-primary/90 transition-all flex items-center gap-2 cursor-pointer"
                       >
                         <CheckCircle className="w-4 h-4" />
-                        Confirm Submission
+                        Submit for Grading
                       </button>
                     </div>
                   </form>
-                </>
+                </div>
               )}
             </motion.div>
           </div>

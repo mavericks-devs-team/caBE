@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useAuth } from "@/hooks/use-auth";
-import { LayoutDashboard, Zap, LogIn, Menu, X, LogOut } from "lucide-react";
+import { LayoutDashboard, Zap, LogIn, Menu, X, LogOut, Trophy } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -15,6 +15,7 @@ export function Navbar() {
   const navLinks = [
     { name: "The Arena", path: "/arena", icon: Zap },
     { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+    { name: "Leaderboard", path: "/leaderboard", icon: Trophy },
   ];
 
   return (

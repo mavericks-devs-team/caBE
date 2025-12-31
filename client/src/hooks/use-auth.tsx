@@ -1,6 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import {
-    User as FirebaseUser,
     onAuthStateChanged,
     signInWithPopup,
     signOut as firebaseSignOut,
@@ -20,6 +19,7 @@ export type AppUser = {
     photoURL?: string;
     rank?: string;
     points?: number;
+    completedTasks?: Record<string, number>;
     role?: string; // 'user' | 'admin'
     isTrusted?: boolean;
 };
@@ -44,12 +44,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const { toast } = useToast();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        let timer: NodeJS.Timeout;
+
+        const unsubscribe = onAuthStateChanged(auth, async (firebaseUser: any) => {
+            if (timer) clearTimeout(timer); // Clear fallback timer if auth responds
+
             if (firebaseUser) {
                 // User is signed in. Listen to their Firestore document.
                 const userRef = doc(db, "users", firebaseUser.uid);
 
-                const unsubDoc = onSnapshot(userRef, async (docSnap) => {
+                const unsubDoc = onSnapshot(userRef, async (docSnap: any) => {
                     if (docSnap.exists()) {
                         // User exists in DB, sync state
                         const userData = docSnap.data();
@@ -59,17 +63,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                             displayName: userData.displayName || firebaseUser.displayName,
                             photoURL: userData.photoURL || firebaseUser.photoURL,
                             username: userData.username,
-                            rank: userData.gameData?.rank || "Bronze",
-                            points: userData.gameData?.points || 0,
-                            role: userData.gameData?.role || "user",
+                            // Priority: Root level (updated by backend) -> gameData (initial structure) -> Default
+                            rank: userData.rank || userData.gameData?.rank || "Bronze",
+                            points: userData.points ?? userData.gameData?.points ?? 0,
+                            completedTasks: userData.completedTasks || {},
+                            role: userData.role || userData.gameData?.role || "user",
                             isTrusted: userData.security?.isTrusted || false
                         });
                     } else {
                         // User is authenticated but no doc in "users" collection yet.
-                        // This happens on first signup. We create the basic shell here 
-                        // OR we expect a Cloud Function to do it. 
-                        // For resilience, let's create it if missing (or handle partial state).
-                        // Currently, we'll set a basic user state and wait for the "finish profile" flow.
                         setUser({
                             uid: firebaseUser.uid,
                             email: firebaseUser.email,
@@ -81,7 +83,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                         });
                     }
                     setLoading(false);
-                }, (error) => {
+                }, (error: any) => {
                     console.error("Error fetching user data:", error);
                     setLoading(false);
                 });
@@ -94,7 +96,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             }
         });
 
-        return () => unsubscribe();
+        // FALLBACK: If Firebase takes too long (e.g. 2s), use MOCK USER for Demo/MVP
+        timer = setTimeout(() => {
+            console.warn("⚠️ Auth slow/failed. Using MOCK USER for MVP.");
+            setUser({
+                uid: "mock-user-1",
+                email: "demo@example.com",
+                displayName: "Mock Agent",
+                username: "GuestAgent",
+                photoURL: "https://api.dicebear.com/7.x/avataaars/svg?seed=Felix",
+                rank: "Silver",
+                points: 1250,
+                role: "user",
+                completedTasks: { "mock-3": 100 }
+            });
+            setLoading(false);
+        }, 2000);
+
+        return () => {
+            unsubscribe();
+            if (timer) clearTimeout(timer);
+        };
     }, []);
 
     const signInWithGoogle = async () => {

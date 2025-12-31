@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { insertTaskSchema, insertSubmissionSchema, tasks, submissions, users } from './schema';
+import { insertTaskSchema, insertSubmissionSchema, type Task, type Submission, type User } from './models';
 
 export const errorSchemas = {
   validation: z.object({
@@ -20,7 +20,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/user',
       responses: {
-        200: z.custom<typeof users.$inferSelect>(),
+        200: z.custom<User>(),
         401: errorSchemas.notFound, // Not logged in
       },
     },
@@ -30,14 +30,14 @@ export const api = {
       method: 'GET' as const,
       path: '/api/tasks',
       responses: {
-        200: z.array(z.custom<typeof tasks.$inferSelect>()),
+        200: z.array(z.custom<Task>()),
       },
     },
     get: {
       method: 'GET' as const,
       path: '/api/tasks/:id',
       responses: {
-        200: z.custom<typeof tasks.$inferSelect>(),
+        200: z.custom<Task>(),
         404: errorSchemas.notFound,
       },
     },
@@ -46,7 +46,7 @@ export const api = {
       path: '/api/tasks',
       input: insertTaskSchema,
       responses: {
-        201: z.custom<typeof tasks.$inferSelect>(),
+        201: z.custom<Task>(),
         400: errorSchemas.validation,
       },
     },
@@ -57,7 +57,7 @@ export const api = {
       path: '/api/submissions',
       input: insertSubmissionSchema,
       responses: {
-        201: z.custom<typeof submissions.$inferSelect & { rankUp?: boolean; newRank?: string }>(),
+        201: z.custom<Submission & { rankUp?: boolean; newRank?: string }>(),
         400: errorSchemas.validation,
       },
     },
@@ -65,7 +65,7 @@ export const api = {
       method: 'GET' as const,
       path: '/api/submissions',
       responses: {
-        200: z.array(z.custom<typeof submissions.$inferSelect & { task?: typeof tasks.$inferSelect }>()),
+        200: z.array(z.custom<Submission & { task?: Task }>()),
       },
     },
   },

@@ -1,4 +1,4 @@
-import { RANKS } from "@shared/schema";
+import { RANKS } from "@shared/models";
 
 export function getTaskEquivalent(currentPoints: number, currentRank: string) {
     // Determine next rank

@@ -1,15 +1,15 @@
+import { useAuth } from "@/hooks/use-auth";
 import { useTasks } from "@/hooks/use-tasks";
-import { useSubmissions } from "@/hooks/use-submissions";
 import { TaskCard } from "@/components/ui/TaskCard";
 import { Lock, Star, Zap, ShieldAlert, Crosshair } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function Arena() {
+  const { user } = useAuth();
   const { data: tasks, isLoading: tasksLoading } = useTasks();
-  const { data: submissions } = useSubmissions();
 
   const completedTaskIds = new Set(
-    submissions?.filter(s => s.status === "approved").map(s => s.taskId) || []
+    user?.completedTasks ? Object.keys(user.completedTasks) : []
   );
 
   // ZONES LOGIC
