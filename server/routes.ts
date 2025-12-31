@@ -1,30 +1,27 @@
 import { Express } from "express";
 import { Server } from "http";
 
-import { getAllTasks, getTaskById, createTask } from "./storage.js";
-import { mockTasks } from "./mockData.js";
-import { routes } from "../shared/routes.js";
-import { ApiResponse } from "../shared/models.js";
+import { MOCK_TASKS } from "./mockData.js";
 
 export async function registerRoutes(_http: Server, app: Express) {
   console.log("🔧 Registering API routes...");
 
-  // --- HEALTH CHECK ---
+  // Health check
   app.get("/api/health", (_req, res) => {
-    res.json({ status: "ok", service: "backend" });
+    res.json({ ok: true });
   });
 
-  // --- GET ALL TASKS ---
-  app.get(routes.tasks.list, async (_req, res) => {
-    const data = await getAllTasks();
-    const response: ApiResponse = { success: true, data };
-    res.json(response);
+  // Return mock tasks (MVP-safe)
+  app.get("/api/tasks", (_req, res) => {
+    res.json({
+      success: true,
+      data: MOCK_TASKS
+    });
   });
 
-  // --- GET TASK BY ID ---
-  app.get(routes.tasks.get, async (req, res) => {
-    const id = req.params.id;
-    const task = await getTaskById(id);
+  // Task by ID (mock lookup)
+  app.get("/api/tasks/:id", (req, res) => {
+    const task = MOCK_TASKS.find(t => String(t.id) === req.params.id);
 
     if (!task) {
       return res.status(404).json({
@@ -33,24 +30,8 @@ export async function registerRoutes(_http: Server, app: Express) {
       });
     }
 
-    const response: ApiResponse = { success: true, data: task };
-    res.json(response);
+    res.json({ success: true, data: task });
   });
 
-  // --- CREATE TASK ---
-  app.post(routes.tasks.create, async (req, res) => {
-    const payload = req.body;
-
-    const task = await createTask(payload);
-    const response: ApiResponse = { success: true, data: task };
-
-    res.json(response);
-  });
-
-  // --- MOCK FALLBACK (if DB OFF) ---
-  app.get("/api/mock/tasks", (_req, res) => {
-    res.json({ success: true, data: mockTasks });
-  });
-
-  console.log("✅ API routes registered");
+  console.log("✅ API routes ready");
 }
