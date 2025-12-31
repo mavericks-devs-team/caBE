@@ -77,11 +77,22 @@ app.use((req, res, next) => {
     await setupVite(httpServer, app);
   }
 
+  // --------- 🔹 NEW MVP LANDING ROUTE 🔹 ---------
+  // Shows a simple success page instead of "Cannot GET /"
+  app.get("/", (_req, res) => {
+    res.send(`
+      <h2>🚀 caBE Arena Backend is LIVE</h2>
+      <p>Deployment successful. API is running.</p>
+      <p>Environment: <b>${process.env.NODE_ENV || "development"}</b></p>
+    `);
+  });
+  // ----------------------------------------------
+
   // ----- RENDER REQUIREMENT -----
   // Must bind to process.env.PORT and 0.0.0.0
   const port = parseInt(process.env.PORT || "5000", 10);
 
   httpServer.listen(port, "0.0.0.0", () => {
-    log(`🚀 Server running on 0.0.0.0:${port}`);
+    log(\`🚀 Server running on 0.0.0.0:\${port}\`);
   });
 })();
