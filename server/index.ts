@@ -2,7 +2,9 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import { registerRoutes } from "./routes";
+
+// IMPORTANT: include .js for ESM build compatibility
+import { registerRoutes } from "./routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -16,19 +18,13 @@ app.use(express.json());
 registerRoutes(app);
 
 // ---------------- STATIC FRONTEND ----------------
-
-// Absolute path to client build
 const clientDist = path.join(__dirname, "../client/dist");
 
 console.log("🔎 Static middleware serving:", clientDist);
-
 app.use(express.static(clientDist));
 
-// Fallback → SPA index.html
-app.get("*", (req, res) => {
-  const indexPath = path.join(clientDist, "index.html");
-  console.log("➡️ Fallback to:", indexPath);
-  res.sendFile(indexPath);
+app.get("*", (_req, res) => {
+  res.sendFile(path.join(clientDist, "index.html"));
 });
 
 // ---------------- SERVER START ----------------
