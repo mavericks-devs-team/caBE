@@ -12,9 +12,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 (async () => {
-  await registerRoutes(httpServer, app);
 
-  // Serve frontend ONLY in production
+  // Register API routes (takes ONLY app now)
+  await registerRoutes(app);
+
+  // Serve frontend in production
   if (process.env.NODE_ENV === "production") {
     serveStatic(app);
   }
@@ -24,4 +26,5 @@ app.use(express.urlencoded({ extended: false }));
   httpServer.listen(port, "0.0.0.0", () => {
     console.log(`🚀 Server running on 0.0.0.0:${port}`);
   });
+
 })();
