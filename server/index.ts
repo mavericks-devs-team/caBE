@@ -43,7 +43,9 @@ app.use((req, res, next) => {
     const duration = Date.now() - start;
     if (path.startsWith("/api")) {
       let msg = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
-      if (capturedJsonResponse) msg += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      if (capturedJsonResponse) {
+        msg += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      }
       log(msg);
     }
   });
@@ -61,6 +63,14 @@ app.use((req, res, next) => {
     log(`❌ ${message}`, "error");
   });
 
-  // Static serve only in production if client build exists
   if (process.env.NODE_ENV === "production") {
-    import("./static.js").then(({ serveSta
+    const { serveStatic } = await import("./static.js");
+    serveStatic(app);
+  }
+
+  const port = Number(process.env.PORT) || 10000;
+
+  httpServer.listen(port, "0.0.0.0", () => {
+    log(`🚀 Server running on 0.0.0.0:${port}`);
+  });
+})();
