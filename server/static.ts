@@ -1,6 +1,6 @@
 import express, { type Express } from "express";
-import path from "path";
 import fs from "fs";
+import path from "path";
 
 export function serveStatic(app: Express) {
   const distPath = path.resolve("client/dist");
@@ -8,10 +8,11 @@ export function serveStatic(app: Express) {
   console.log("🔎 Static middleware attempting to serve:", distPath);
 
   if (!fs.existsSync(distPath)) {
-    console.warn("⚠️ No client build found:", distPath);
+    console.warn(`⚠️ No client build found at ${distPath}`);
     return;
   }
 
+  // Serve static assets
   app.use(express.static(distPath));
 
   // Fallback to index.html for SPA routes
@@ -19,5 +20,5 @@ export function serveStatic(app: Express) {
     res.sendFile(path.join(distPath, "index.html"));
   });
 
-  console.log("✅ Static frontend enabled");
+  console.log("✅ Static files are being served from:", distPath);
 }
