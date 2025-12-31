@@ -1,6 +1,6 @@
 {
   "include": ["client/src/**/*", "shared/**/*", "server/**/*"],
-  "outDir": "./dist",
+  "outDir": "./dist/server",
   "rootDir": "./server",
   "exclude": ["node_modules", "build", "dist", "**/*.test.ts"],
   "compilerOptions": {
