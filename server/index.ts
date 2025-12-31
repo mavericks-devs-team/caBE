@@ -1,8 +1,10 @@
 import express from "express";
 import cors from "cors";
 import { createServer } from "http";
-import { registerRoutes } from "./routes";
-import { serveStatic } from "./static";
+
+// 👇 IMPORTANT — include .js extension for ESM runtime
+import { registerRoutes } from "./routes.js";
+import { serveStatic } from "./static.js";
 
 const app = express();
 const httpServer = createServer(app);
@@ -12,11 +14,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 (async () => {
+  await registerRoutes(app);   // takes only app
 
-  // Register API routes (takes ONLY app now)
-  await registerRoutes(app);
-
-  // Serve frontend in production
   if (process.env.NODE_ENV === "production") {
     serveStatic(app);
   }
@@ -26,5 +25,4 @@ app.use(express.urlencoded({ extended: false }));
   httpServer.listen(port, "0.0.0.0", () => {
     console.log(`🚀 Server running on 0.0.0.0:${port}`);
   });
-
 })();
