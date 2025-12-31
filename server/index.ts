@@ -1,36 +1,66 @@
-import express from "express";
-import path from "path";
-import { fileURLToPath } from "url";
+import express, { type Request, Response, NextFunction } from "express";
 import cors from "cors";
+import { createServer } from "http";
 import { registerRoutes } from "./routes.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 const app = express();
+const httpServer = createServer(app);
+
+declare module "http" {
+  interface IncomingMessage {
+    rawBody?: unknown;
+  }
+}
+
+app.use(
+  express.json({
+    verify: (req, _res, buf) => {
+      req.rawBody = buf;
+    },
+  })
+);
+
+app.use(express.urlencoded({ extended: false }));
 app.use(cors());
-app.use(express.json());
 
-// ---- API ROUTES ----
-registerRoutes(app);
+export function log(message: string, source = "express") {
+  const formattedTime = new Date().toISOString();
+  console.log(`${formattedTime} [${source}] ${message}`);
+}
 
-// ---- STATIC FRONTEND (Production) ----
-const clientDist = path.join(__dirname, "../client/dist");
-console.log("Serving static from:", clientDist);
+app.use((req, res, next) => {
+  const start = Date.now();
+  const path = req.path;
+  let capturedJsonResponse: any;
 
-app.use(express.static(clientDist));
+  const originalJson = res.json;
+  res.json = function (body: any) {
+    capturedJsonResponse = body;
+    return originalJson.call(this, body);
+  };
 
-// Catch root request -> send frontend
-app.get("/", (_req, res) => {
-  res.sendFile(path.join(clientDist, "index.html"));
+  res.on("finish", () => {
+    const duration = Date.now() - start;
+    if (path.startsWith("/api")) {
+      let msg = `${req.method} ${path} ${res.statusCode} in ${duration}ms`;
+      if (capturedJsonResponse) msg += ` :: ${JSON.stringify(capturedJsonResponse)}`;
+      log(msg);
+    }
+  });
+
+  next();
 });
 
-// Catch all client routes (React Router etc.)
-app.get("*", (_req, res) => {
-  res.sendFile(path.join(clientDist, "index.html"));
-});
+(async () => {
+  registerRoutes(app);
 
-const port = process.env.PORT || 10000;
-app.listen(port, "0.0.0.0", () => {
-  console.log(`🚀 Server running on ${port}`);
-});
+  app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
+    const status = err.status || 500;
+    const message = err.message || "Internal Server Error";
+    res.status(status).json({ message });
+    log(`❌ ${message}`, "error");
+  });
+
+  // Static serve only in production if client build exists
+  if (process.env.NODE_ENV === "production") {
+    import("./static.js").then(({ serveSta
